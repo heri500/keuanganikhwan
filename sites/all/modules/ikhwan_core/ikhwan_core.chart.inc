@@ -2,6 +2,7 @@
 
 function assignment_all_3d_column_chart($month = null, $year = null, $zone = null)
 {
+    $detect = mobile_detect_get_object();
     $assignmentTotal = '';
     $getDataZone = getZoneByCode();
     $namaZone = array();
@@ -49,8 +50,11 @@ function assignment_all_3d_column_chart($month = null, $year = null, $zone = nul
     if (is_object($options)) {
         // Optionally add styles or any other valid attributes, suitable for
         // drupal_attributes().
-        $attributes = array('style' => array('height: 700px;'));
-
+        if ($detect->isMobile()){
+            $attributes = array('style' => array('height: 450px;'));
+        }else {
+            $attributes = array('style' => array('height: 700px;'));
+        }
         // Return block definition.
         $assignmentTotal = highcharts_render($options, $attributes);
     }

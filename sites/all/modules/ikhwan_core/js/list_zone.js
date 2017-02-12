@@ -1,3 +1,6 @@
+function entry_pemasukan(zoneCode, month, year){
+    window.location = Drupal.settings.basePath + 'pemasukanpengeluaran/'+ zoneCode +'/'+ month +'/'+ year;
+}
 jQuery(function ($) {
     $('.edit-zone').on('click', function (e){
         e.preventDefault();

@@ -363,7 +363,17 @@ function getZoneByCode($kodeZone = null){
 /**
  * @return string
  */
-function listZone(){
+function listZone($month = null, $year = null){
+    if (!empty($month) && !empty($year)){
+    }else{
+        $month = date('n');
+        $year = date('Y');
+    }
+    $intDate = mktime(7,0,0,$month,1,$year);
+    $dataPendapatan = array();
+    if (function_exists('get_total_pemasukan_pengeluaran_zon')){
+        $dataPendapatan = get_total_pemasukan_pengeluaran_zon($month, $year);
+    }
     $module_path = drupal_get_path('module','ikhwan_core');
     $csspath = $module_path.'/css/custom-style.css';
     drupal_add_css($csspath);
@@ -373,12 +383,12 @@ function listZone(){
     $attributes['datatable_options'] = array(
         'bFilter'   => TRUE,
         'bInfo'     => TRUE,
-        'sPaginationType' => 'full_numbers',
+        'bPaginate' => FALSE,
     );
     // Define table columns
     $header = array(
         array(
-            'data' => t('Kode Zone'),
+            'data' => t('Kode'),
             'datatable_options' => array(
                 'bSortable' => TRUE,
                 'bSearchable' => TRUE,
@@ -399,13 +409,6 @@ function listZone(){
             ),
         ),
         array(
-            'data' => t('Website'),
-            'datatable_options' => array(
-                'bSortable' => TRUE,
-                'bSearchable' => TRUE,
-            ),
-        ),
-        array(
             'data' => t('Telephone'),
             'datatable_options' => array(
                 'bSortable' => TRUE,
@@ -420,28 +423,38 @@ function listZone(){
             ),
         ),
         array(
-            'data' => t('BBM'),
+            'data' => t('Pendapatan').' ['.date('M',$intDate).']',
             'datatable_options' => array(
                 'bSortable' => TRUE,
                 'bSearchable' => TRUE,
             ),
+            'class' => 'col-input-number align-center',
         ),
         array(
-            'data' => t('Telegram'),
+            'data' => t('Pengeluaran').' ['.date('M',$intDate).']',
             'datatable_options' => array(
                 'bSortable' => TRUE,
                 'bSearchable' => TRUE,
             ),
+            'class' => 'col-input-number align-center',
         ),
         array(
-            'data' => t('Email'),
+            'data' => t('Baki').' ['.date('M',$intDate).']',
             'datatable_options' => array(
                 'bSortable' => TRUE,
                 'bSearchable' => TRUE,
             ),
+            'class' => 'col-input-number align-center',
         ),
         array(
             'data' => t('Edit'),
+            'datatable_options' => array(
+                'bSortable' => FALSE,
+                'bSearchable' => FALSE,
+            ),
+        ),
+        array(
+            'data' => t('Entry'),
             'datatable_options' => array(
                 'bSortable' => FALSE,
                 'bSearchable' => FALSE,
@@ -451,17 +464,37 @@ function listZone(){
     // Table data.
     $dataZone = getZoneByCode();
     $rows = array();
+    $totalPendapatan = 0;
+    $totalPengeluaran = 0;
+    $totalBaki = 0;
     for ($i = 0;$i < count($dataZone);$i++){
         $zoneData = array();
         $zoneData[] = $dataZone[$i]->zone;
         $zoneData[] = $dataZone[$i]->nama;
         $zoneData[] = $dataZone[$i]->alamat;
-        $zoneData[] = $dataZone[$i]->website;
         $zoneData[] = $dataZone[$i]->telepon;
         $zoneData[] = $dataZone[$i]->whatsapp;
-        $zoneData[] = $dataZone[$i]->bbm;
-        $zoneData[] = $dataZone[$i]->telegram;
-        $zoneData[] = $dataZone[$i]->email;
+        if (isset($dataPendapatan[$dataZone[$i]->zone])){
+            $pendapatanZone = number_format(
+                $dataPendapatan[$dataZone[$i]->zone]->total_pemasukan,2,'.',','
+            );
+            $pengeluaranZone = number_format(
+                $dataPendapatan[$dataZone[$i]->zone]->total_pengeluaran,2,'.',','
+            );
+            $bakiZone = number_format(
+                $dataPendapatan[$dataZone[$i]->zone]->total_baki,2,'.',','
+            );
+        }else{
+            $pendapatanZone = 0;
+            $pengeluaranZone = 0;
+            $bakiZone = 0;
+        }
+        $totalPendapatan = $totalPendapatan + $pendapatanZone;
+        $totalPengeluaran = $totalPengeluaran + $pengeluaranZone;
+        $totalBaki = $totalBaki + $bakiZone;
+        $zoneData[] = array('data' => $pendapatanZone, 'class' => 'align-right');
+        $zoneData[] = array('data' => $pengeluaranZone, 'class' => 'align-right');
+        $zoneData[] = array('data' => $bakiZone, 'class' => 'align-right');
         $editIcon = '<i class="fa fa-edit"></i>';
         $editButtonVar = array(
             'element' => array(
@@ -476,13 +509,52 @@ function listZone(){
         );
         $editButton = theme('button', $editButtonVar);
         $zoneData[] = $editButton;
+        $addIcon = '<i class="fa fa-plus"></i>';
+        $addButtonVar = array(
+            'element' => array(
+                '#attributes' => array(
+                    'class' => array('btn-primary','btn-xs','no-margin','add-pendapatan'),
+                    'id' => 'add-pendapatan-'.$dataZone[$i]->zone,
+                    'name' => 'add-pendapatan-'.$dataZone[$i]->zone,
+                    'onclick' => 'entry_pemasukan(\''.$dataZone[$i]->zone.'\', '.$month.','.$year.')',
+                ),
+                '#button_type' => 'button',
+                '#value' => $editIcon.' ENTRY KEWANGAN',
+            )
+        );
+        $addButton = theme('button', $addButtonVar);
+        $zoneData[] = $addButton;
         $rows[] = $zoneData;
     }
     // Or, render using a theme function.
+    $footer[] = array(
+        array(
+            'data' => '<strong>'.t('TOTAL').'</strong>',
+            'colspan' => 5,
+            'class' => 'align-right',
+        ),
+        array(
+            'data' => '<strong>'.number_format($totalPendapatan,2,'.',',').'</strong>',
+            'class' => 'col-input-number align-right',
+        ),
+        array(
+            'data' => '<strong>'.number_format($totalPengeluaran,2,'.',',').'</strong>',
+            'class' => 'col-input-number align-right',
+        ),
+        array(
+            'data' => '<strong>'.number_format($totalBaki,2,'.',',').'</strong>',
+            'class' => 'col-input-number align-right',
+        ),
+        array(
+            'data' => '&nbsp;',
+            'colspan' => 2,
+        ),
+    );
     $variables = array(
         'attributes' => $attributes,
         'header' => $header,
         'rows' => $rows,
+        'footer' => $footer,
     );
     $newZoneButtonVar = array(
         'element' => array(
@@ -496,9 +568,19 @@ function listZone(){
         )
     );
     $newZoneButton = theme('button', $newZoneButtonVar);
-    $listZone = $newZoneButton.theme('datatable', $variables);
+    $variables['content'] = t('Pilih Bulan dan Tahun Pendapatan dan Pengeluaran, kemudian klik tombol show untuk melihat Pendapatan dan Pengeluaran');
+    $variables['month'] = $month;
+    $variables['year'] = $year;
+    $form = drupal_get_form('infoFormZone',$variables);
+    $formPendapatan = drupal_render($form);
+    $listZone = $newZoneButton.$formPendapatan.theme('datatable', $variables);
     return $listZone;
 }
+
+function filter_periode_form($form, &$form_state, $variables = null){
+
+}
+
 /**
  * @param null $kodeZone
  * @return string
@@ -1408,6 +1490,76 @@ function infoForm($form, &$form_state, $variables = null){
     return $form;
 }
 
+function infoFormZone($form, &$form_state, $variables = null){
+    if (!isset($variables['content'])) {
+        $variables['content'] = t('Pilih Bulan dan Tahun Assigment, kemudian klik tombol 
+        assigment diatas untuk memulai entry assignment'
+        );
+    }
+    $monthArray = array(
+        1 => 'Januari',
+        2 => 'Februari',
+        3 => 'Maret',
+        4 => 'April',
+        5 => 'Mei',
+        6 => 'Juni',
+        7 => 'Juli',
+        8 => 'Agustus',
+        9 => 'September',
+        10 => 'Oktober',
+        11 => 'November',
+        12 => 'Desember',
+    );
+    $form['info_content'] = array(
+        '#type' => 'item',
+        '#markup' => $variables['content'],
+        '#prefix' => '<div class="col-md-12">',
+        '#suffix' => '</div>',
+    );
+    $currDate = date('j');
+    if (isset($variables['month']) && isset($variables['year'])){
+        $month = $variables['month'];
+        $year = $variables['year'];
+    }else {
+        if ($currDate < 10) {
+            $intDate = mktime(7, 0, 0, (date('n') - 1), 1, date('Y'));
+            $month = date('n', $intDate);
+            $year = date('Y', $intDate);
+        } else {
+            $month = date('n');
+            $year = date('Y');
+        }
+    }
+    $form['#attributes'] = array('class' => array('form-inline'));
+    $form['month'] = array(
+        '#type' => 'select',
+        '#title' => t('Bulan'),
+        '#default_value' => $month,
+        '#options' => $monthArray,
+        '#select2' => array(
+            'placeholder' => 'Pilih Bulan Assignment',
+        ),
+    );
+    $form['year'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Tahun'),
+        '#default_value' => $year,
+        '#attributes' => array('class' => array('col-number')),
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Show'),
+        '#attributes' => array('class' => array('btn-sm btn-warning'), 'style' => 'margin: -8px 10px 0 !important;'),
+    );
+    return $form;
+}
+
+function infoFormZone_submit($form, &$form_state){
+    global $user;
+    set_default_time_zone();
+    $values = $form_state['values'];
+    drupal_goto('masterdata/zone/'.$values['month'].'/'.$values['year']);
+}
 /**
  * @param $form
  * @param $form_state

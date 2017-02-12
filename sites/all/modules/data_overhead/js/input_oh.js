@@ -22,6 +22,7 @@ function calculateTotal($){
     });
     return totalValue;
 }
+
 jQuery(function ($) {
     $('.input-oh').maskNumber({
         thousands: '.',

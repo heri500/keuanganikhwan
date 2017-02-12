@@ -8,7 +8,7 @@ function setoran_pengeluaran_menu() {
         'title' => t('Setoran & Pengeluaran'),
         'type' => MENU_NORMAL_ITEM,
         'menu_name' => 'main-menu',
-        'access arguments' => array('admin master data overhead'),
+        'access arguments' => array('admin master data setoran'),
         'page callback' => 'setoran_pengeluaran',
         'weight' => 10,
     );
