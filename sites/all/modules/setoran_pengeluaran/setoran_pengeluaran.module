@@ -1,0 +1,40 @@
+<?php
+header('Access-Control-Allow-Origin: *');
+/**
+ * @return mixed
+ */
+function setoran_pengeluaran_menu() {
+    $items['setoran'] = array(
+        'title' => t('Setoran & Pengeluaran'),
+        'type' => MENU_NORMAL_ITEM,
+        'menu_name' => 'main-menu',
+        'access arguments' => array('admin master data overhead'),
+        'page callback' => 'setoran_pengeluaran',
+        'weight' => 10,
+    );
+    return $items;
+}
+/**
+ * @return array
+ */
+function setoran_pengeluaran_permission() {
+    return array(
+        'access data setoran' => array(
+            'title' => t('access data setoran'),
+            'description' => t('enable to get access for data setoran.'),
+        ),
+        'admin data setoran' => array(
+            'title' => t('admin data setoran'),
+            'description' => t('enable to manage data setoran.'),
+        ),
+        'access data pengeluaran' => array(
+            'title' => t('access data pengeluaran'),
+            'description' => t('enable to get access for data pengeluaran.'),
+        ),
+        'admin data pengeluaran' => array(
+            'title' => t('admin data pengeluaran'),
+            'description' => t('enable to manage data pengeluaran.'),
+        ),
+    );
+}
+require_once 'setoran_pengeluaran.api.php.inc';

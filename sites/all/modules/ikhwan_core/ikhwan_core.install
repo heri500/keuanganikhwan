@@ -1,0 +1,239 @@
+<?php
+/**
+ * @file
+ * Install file for ikhwan core module.
+ */
+/**
+ * Implements hook_install().
+ * - Add the body field.
+ */
+
+function ikhwan_core_install() {
+    drupal_set_message("Ikhwan Core Module successfully installed");
+    ikhwan_core_update_7001();
+    ikhwan_core_update_7002();
+    ikhwan_core_update_7003();
+    ikhwan_core_update_7004();
+    ikhwan_core_update_7005();
+    ikhwan_core_update_7006();
+    ikhwan_core_update_7007();
+}
+function ikhwan_core_uninstall() {
+    db_drop_table('zuser_zone');
+    drupal_set_message("Ikhwan Core successfully removed");
+}
+function ikhwan_core_enable() {
+    drupal_set_message("Ikhwan Core Module successfully enabled");
+}
+function ikhwan_core_disable() {
+    drupal_set_message("Ikhwan Core Module successfully disabled");
+}
+function ikhwan_core_schema() {
+    require 'ikhwan_core.schema.inc';
+    return $schema;
+}
+function ikhwan_core_update_7001(){
+    $assignmentId = array(
+        'type' => 'varchar',
+    	'length' => 30,
+    	'not null' => TRUE,
+    	'default' => 'assignment_id',
+    	'description' => 'Assignment ID from assignment data.',
+    );
+    $returnBol = db_change_field( 'zdata_assigment', 'id', 'id', $assignmentId);
+    return $returnBol;
+}
+function ikhwan_core_update_7002(){
+    $assignmentId = array(
+        'type' => 'varchar',
+    	'length' => 30,
+    	'not null' => TRUE,
+    	'default' => 'assignment_id',
+    	'description' => 'Assignment ID from assignment data.',
+    );
+    $returnBol = db_change_field( 'zdata_assigment', 'id', 'id', $assignmentId);
+    return $returnBol;
+}
+function ikhwan_core_update_7003(){
+    $assignmentId = array(
+        'type' => 'varchar',
+    	'length' => 30,
+    	'not null' => TRUE,
+    	'default' => 'assignment_id',
+    	'description' => 'Assignment Zone ID from Assignment Zone data',
+    );
+    $returnBol = db_change_field( 'zassigment_zone', 'id', 'id', $assignmentId);
+    return $returnBol;
+}
+function ikhwan_core_update_7004(){
+    $assignmentId = array(
+        'type' => 'varchar',
+        'length' => 30,
+        'not null' => TRUE,
+        'default' => 'assignment_id',
+        'description' => 'ID assigment',
+    );
+    $return = db_add_field( 'zassigment_zone', 'assignment_id', $assignmentId);
+    return $return;
+}
+function ikhwan_core_update_7005(){
+    $assignmentWeight = array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'weight for ordering assignment.',
+    );
+    $return = db_add_field( 'zdata_assigment', 'weight', $assignmentWeight);
+    return $return;
+}
+function ikhwan_core_update_7006(){
+    $assignmentMonth = array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'month for assignment.',
+    );
+    $return = db_add_field( 'zassigment_zone', 'month', $assignmentMonth);
+    return $return;
+}
+function ikhwan_core_update_7007(){
+    $assignmentYear = array(
+        'type' => 'int',
+        'default' => 0,
+        'description' => 'Year for assignment.',
+    );
+    $return = db_add_field( 'zassigment_zone', 'year', $assignmentYear);
+    return $return;
+}
+function ikhwan_core_update_7008(){
+    $schema['zuser_zone_premis'] = array(
+        'description' => 'Stores information about user for zone or premis.',
+        'fields' => array(
+            'id' => array(
+                'type' => 'varchar',
+                'length' => 30,
+                'not null' => TRUE,
+                'default' => 'not set',
+                'description' => 'Auto generated random ID.',
+            ),
+            'zone' => array(
+                'type' => 'varchar',
+                'length' => 3,
+                'not null' => TRUE,
+                'default' => '000',
+                'description' => 'zone code.',
+            ),
+            'id_premis' => array(
+                'type' => 'varchar',
+                'length' => 30,
+                'not null' => TRUE,
+                'default' => 'not set',
+                'description' => 'premis ID.',
+            ),
+            'nama' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => 'Username',
+                'description' => 'Nama user.',
+            ),
+            'uid' => array(
+                'type' => 'int',
+                'default' => 0,
+                'description' => 'uid that created the record.',
+            ),
+            'uid_changed' => array(
+                'type' => 'int',
+                'default' => 0,
+                'description' => 'uid that modified the record.',
+            ),
+            'created' => array(
+                'type' => 'int',
+                'default' => 0,
+                'description' => 'The time that the row  was created, as a Unix timestamp.',
+            ),
+            'changed' => array(
+                'type' => 'int',
+                'default' => 0,
+                'description' => 'The time that the row  was updated, as a Unix timestamp.',
+            ),
+        ),
+        'primary key' => array('id',),
+        'indexes' => array(
+            'zone'          => array('zone'),
+            'id_premis'     => array('id_premis'),
+            'nama'          => array('nama'),
+            'uid'           => array('uid'),
+            'uid_changed'   => array('uid_changed'),
+            'created'       => array('created'),
+            'changed'       => array('changed'),
+        ),
+    );
+    $return = db_create_table('zuser_zone_premis', $schema['zuser_zone_premis']);
+    return $return;
+}
+function ikhwan_core_update_7009(){
+    db_drop_table('zuser_zone_premis');
+    $schema['zuser_zone'] = array(
+        'description' => 'Stores information about user for zone or premis.',
+        'fields' => array(
+            'id' => array(
+                'type' => 'varchar',
+                'length' => 30,
+                'not null' => TRUE,
+                'default' => 'not set',
+                'description' => 'Auto generated random ID.',
+            ),
+            'nama' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => 'Username',
+                'description' => 'Nama user.',
+            ),
+            'related_uid' => array(
+                'type' => 'int',
+                'default' => 0,
+                'description' => 'uid related to user zone.',
+            ),
+            'zone' => array(
+                'type' => 'text',
+                'size' => 'big',
+                'description' => 'related zone separated by comma.',
+            ),
+            'id_premis' => array(
+                'type' => 'text',
+                'size' => 'big',
+                'description' => 'related premis separated by comma.',
+            ),
+            'uid' => array(
+                'type' => 'int',
+                'default' => 0,
+                'description' => 'uid that created the record.',
+            ),
+            'uid_changed' => array(
+                'type' => 'int',
+                'default' => 0,
+                'description' => 'uid that modified the record.',
+            ),
+            'created' => array(
+                'type' => 'int',
+                'default' => 0,
+                'description' => 'The time that the row  was created, as a Unix timestamp.',
+            ),
+            'changed' => array(
+                'type' => 'int',
+                'default' => 0,
+                'description' => 'The time that the row  was updated, as a Unix timestamp.',
+            ),
+        ),
+        'primary key' => array('id',),
+        'indexes' => array(
+            'nama'          => array('nama'),
+            'uid'           => array('uid'),
+            'uid_changed'   => array('uid_changed'),
+            'created'       => array('created'),
+            'changed'       => array('changed'),
+        ),
+    );
+    $return = db_create_table('zuser_zone', $schema['zuser_zone']);
+    return $return;
+}
