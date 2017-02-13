@@ -5,8 +5,14 @@ function array_jabatan_premis(){
         'Pemantau', 'Pengurus','Wakil Pengurus','Staff','Pra-Staff','Karyawan'
     );
 }
-function list_premis(){
+function list_premis($month = null, $year = null){
     global $user;
+    if (!empty($month) && !empty($year)){
+    }else{
+        $month = date('n');
+        $year = date('Y');
+    }
+    $intDate = mktime(7,0,0,$month,1,$year);
     $core_module_path = drupal_get_path('module','ikhwan_core');
     $csspath = $core_module_path.'/css/custom-style.css';
     drupal_add_css($csspath);
@@ -51,14 +57,16 @@ function list_premis(){
             ),
         ),
         array(
-            'data' => t('Whatsapp'),
+            'data' => t('Setoran').' ('.date('M', $intDate).')',
+            'class' => array('col-input-number align-center'),
             'datatable_options' => array(
                 'bSortable' => TRUE,
                 'bSearchable' => TRUE,
             ),
         ),
         array(
-            'data' => t('BBM'),
+            'data' => t('Pengeluaran').' ('.date('M', $intDate).')',
+            'class' => array('col-input-number align-center'),
             'datatable_options' => array(
                 'bSortable' => TRUE,
                 'bSearchable' => TRUE,
@@ -66,15 +74,15 @@ function list_premis(){
         ),
         array(
             'data' => t('Total OH'),
-            'class' => array('col-number'),
+            'class' => array('col-input-number align-center'),
             'datatable_options' => array(
                 'bSortable' => TRUE,
                 'bSearchable' => TRUE,
             ),
         ),
         array(
-            'data' => t('OH Harian'),
-            'class' => array('col-number'),
+            'data' => t('Harian'),
+            'class' => array('col-input-number-small align-center'),
             'datatable_options' => array(
                 'bSortable' => TRUE,
                 'bSearchable' => TRUE,
@@ -98,6 +106,14 @@ function list_premis(){
         ),
         array(
             'data' => t('Overhead'),
+            'class' => array('col-number'),
+            'datatable_options' => array(
+                'bSortable' => FALSE,
+                'bSearchable' => FALSE,
+            ),
+        ),
+        array(
+            'data' => t('Setoran').' ('.date('M', $intDate).')',
             'class' => array('col-number'),
             'datatable_options' => array(
                 'bSortable' => FALSE,
@@ -190,10 +206,10 @@ function list_premis(){
             $premisData[] = $detailPremis->nama;
             $premisData[] = $detailPremis->alamat;
             $premisData[] = $detailPremis->telepon;
-            $premisData[] = $detailPremis->whatsapp;
-            $premisData[] = $detailPremis->bbm;
-            $premisData[] = '<div class="col-input-number-small align-right">'.number_format($totalSumOH,0,',','.').'</div>';
-            $premisData[] = '<div class="col-input-number-small align-right">'.number_format($totalHarianOH,0,',','.').'</div>';
+            $premisData[] = 0;
+            $premisData[] = 0;
+            $premisData[] = '<div class="align-right">'.number_format($totalSumOH,0,',','.').'</div>';
+            $premisData[] = '<div class="align-right">'.number_format($totalHarianOH,0,',','.').'</div>';
             $editIcon = '<i class="fa fa-edit"></i>';
             $editButtonVar = array(
                 'element' => array(
@@ -238,6 +254,20 @@ function list_premis(){
             );
             $ohButton = theme('button', $ohButtonVar);
             $premisData[] = $ohButton;
+            $setoranButtonVar = array(
+                'element' => array(
+                    '#attributes' => array(
+                        'class' => array('btn-primary', 'btn-xs', 'no-margin', 'add-oh'),
+                        'id' => 'add-setoran-' . $detailPremis->id,
+                        'name' => 'add-setoran-' . $detailPremis->id,
+                        'onclick' => 'setoran_premis(\'' . $detailPremis->id . '\','.$month.','.$year.')',
+                    ),
+                    '#button_type' => 'button',
+                    '#value' => $addIcon . ' SETORAN&nbsp;&nbsp;',
+                )
+            );
+            $setoranButton = theme('button', $setoranButtonVar);
+            $premisData[] = $setoranButton;
             $delIcon = '<i class="fa fa-trash-o"></i>';
             $delButtonVar = array(
                 'element' => array(
@@ -279,7 +309,13 @@ function list_premis(){
         )
     );
     $newPremisButton = theme('button', $newPremisButtonVar);
-    $listPremis = $newPremisButton.theme('datatable', $variables);
+    $variables['content'] = t('Pilih Bulan dan Tahun Setoran & Pengeluaran, kemudian klik tombol show untuk melihat Setoran dan Pengeluaran');
+    $variables['month'] = $month;
+    $variables['year'] = $year;
+    $variables['alamat'] = 'masterdata/premis';
+    $form = drupal_get_form('filter_periode_form',$variables);
+    $formSetoran = drupal_render($form);
+    $listPremis = $newPremisButton.$formSetoran.theme('datatable', $variables);
     return $listPremis;
 }
 

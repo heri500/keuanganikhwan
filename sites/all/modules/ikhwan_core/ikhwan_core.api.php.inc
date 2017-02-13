@@ -571,14 +571,10 @@ function listZone($month = null, $year = null){
     $variables['content'] = t('Pilih Bulan dan Tahun Pendapatan dan Pengeluaran, kemudian klik tombol show untuk melihat Pendapatan dan Pengeluaran');
     $variables['month'] = $month;
     $variables['year'] = $year;
-    $form = drupal_get_form('infoFormZone',$variables);
+    $form = drupal_get_form('filter_periode_form',$variables);
     $formPendapatan = drupal_render($form);
     $listZone = $newZoneButton.$formPendapatan.theme('datatable', $variables);
     return $listZone;
-}
-
-function filter_periode_form($form, &$form_state, $variables = null){
-
 }
 
 /**
@@ -1490,7 +1486,7 @@ function infoForm($form, &$form_state, $variables = null){
     return $form;
 }
 
-function infoFormZone($form, &$form_state, $variables = null){
+function filter_periode_form($form, &$form_state, $variables = null){
     if (!isset($variables['content'])) {
         $variables['content'] = t('Pilih Bulan dan Tahun Assigment, kemudian klik tombol 
         assigment diatas untuk memulai entry assignment'
@@ -1513,7 +1509,7 @@ function infoFormZone($form, &$form_state, $variables = null){
     $form['info_content'] = array(
         '#type' => 'item',
         '#markup' => $variables['content'],
-        '#prefix' => '<div class="col-md-12">',
+        '#prefix' => '<div>',
         '#suffix' => '</div>',
     );
     $currDate = date('j');
@@ -1529,6 +1525,11 @@ function infoFormZone($form, &$form_state, $variables = null){
             $month = date('n');
             $year = date('Y');
         }
+    }
+    if (isset($variables['alamat']) && !empty($variables['alamat'])){
+        $alamat = $variables['alamat'];
+    }else{
+        $alamat = 'masterdata/zone';
     }
     $form['#attributes'] = array('class' => array('form-inline'));
     $form['month'] = array(
@@ -1546,6 +1547,10 @@ function infoFormZone($form, &$form_state, $variables = null){
         '#default_value' => $year,
         '#attributes' => array('class' => array('col-number')),
     );
+    $form['alamat'] = array(
+        '#type' => 'hidden',
+        '#default_value' => $alamat,
+    );
     $form['submit'] = array(
         '#type' => 'submit',
         '#value' => t('Show'),
@@ -1554,11 +1559,11 @@ function infoFormZone($form, &$form_state, $variables = null){
     return $form;
 }
 
-function infoFormZone_submit($form, &$form_state){
+function filter_periode_form_submit($form, &$form_state){
     global $user;
     set_default_time_zone();
     $values = $form_state['values'];
-    drupal_goto('masterdata/zone/'.$values['month'].'/'.$values['year']);
+    drupal_goto($values['alamat'].'/'.$values['month'].'/'.$values['year']);
 }
 /**
  * @param $form

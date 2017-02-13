@@ -1,11 +1,12 @@
-function addCommas(nStr){
-    nStr += "";
-    x = nStr.split(",");
-    x1 = x[0];
-    x2 = x.length > 1 ? "," + x[1] : "";
+function addCommas(nStr)
+{
+    nStr += '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
     var rgx = /(\d+)(\d{3})/;
     while (rgx.test(x1)) {
-        x1 = x1.replace(rgx, "$1" + "," + "$2");
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
     }
     return x1 + x2;
 }
@@ -50,18 +51,18 @@ jQuery(function ($) {
         var pengeluaran = $('.pengeluaran-'+ strID).val().replace(/\,/g,'');
         try {
             pengeluaran = eval(pengeluaran);
+            baki = pemasukan - pengeluaran;
+            totalValue2 = calculateTotal($, 'pengeluaran');
+            totalValue3 = totalValue - totalValue2;
+            $('#total-'+ strID).html(addCommas(baki.toFixed(2)));
+            $('#total-baki').html('<strong>'+ addCommas(totalValue3.toFixed(2)) +'</strong>');
+            $('#total-pemasukan').html('<strong>'+ addCommas(totalValue.toFixed(2)) +'</strong>');
+            var totalPemasukanView = '<div><div class="pull-left"><strong>TOTAL PENDAPATAN : </strong>&nbsp;&nbsp;</div><div class="pull-right"><strong>'+ addCommas(totalValue.toFixed(2)) +'</strong></div></div><br>';
+            totalPemasukanView += '<div><div class="pull-left"><strong>TOTAL PENGELUARAN : </strong>&nbsp;&nbsp;</div><div class="pull-right"><strong>'+ addCommas(totalValue2.toFixed(2)) +'</strong></div></div><br>';
+            totalPemasukanView += '<div><div class="pull-left"><strong>TOTAL BAKI : </strong>&nbsp;&nbsp;</div><div class="pull-right"><strong>'+ addCommas(totalValue3.toFixed(2)) +'</strong></div></div><br>';
+            $('.notifyjs-container .total-setoran span').html(totalPemasukanView);
         }catch (e) {
         }
-        baki = pemasukan - pengeluaran;
-        totalValue2 = calculateTotal($, 'pengeluaran');
-        totalValue3 = totalValue - totalValue2;
-        $('#total-'+ strID).html(addCommas(baki));
-        $('#total-baki').html('<strong>'+ addCommas(totalValue3) +'</strong>');
-        $('#total-pemasukan').html('<strong>'+ addCommas(totalValue) +'</strong>');
-        var totalPemasukanView = '<div><div class="pull-left"><strong>TOTAL PENDAPATAN : </strong>&nbsp;&nbsp;</div><div class="pull-right"><strong>'+ addCommas(totalValue) +'</strong></div></div><br>';
-        totalPemasukanView += '<div><div class="pull-left"><strong>TOTAL PENGELUARAN : </strong>&nbsp;&nbsp;</div><div class="pull-right"><strong>'+ addCommas(totalValue2) +'</strong></div></div><br>';
-        totalPemasukanView += '<div><div class="pull-left"><strong>TOTAL BAKI : </strong>&nbsp;&nbsp;</div><div class="pull-right"><strong>'+ addCommas(totalValue3) +'</strong></div></div><br>';
-        $('.notifyjs-container .total-setoran span').html(totalPemasukanView);
     });
     $('.pengeluaran-value').on('keyup', function () {
         totalValue = calculateTotal($, 'pengeluaran');
@@ -80,18 +81,18 @@ jQuery(function ($) {
         var pemasukan = $('.pemasukan-'+ strID).val().replace(/\,/g,'');
         try {
             pemasukan = eval(pemasukan);
+            baki = pemasukan - pengeluaran;
+            totalValue2 = calculateTotal($, 'pemasukan');
+            totalValue3 = totalValue2 - totalValue;
+            $('#total-'+ strID).html(addCommas(baki.toFixed(2)));
+            $('#total-baki').html('<strong>'+ addCommas(totalValue3.toFixed(2)) +'</strong>');
+            $('#total-pengeluaran').html('<strong>'+ addCommas(totalValue.toFixed(2)) +'</strong>');
+            var totalPemasukanView = '<div><div class="pull-left"><strong>TOTAL PENDAPATAN : </strong>&nbsp;&nbsp;</div><div class="pull-right"><strong>'+ addCommas(totalValue2.toFixed(2)) +'</strong></div></div><br>';
+            totalPemasukanView += '<div><div class="pull-left"><strong>TOTAL PENGELUARAN : </strong>&nbsp;&nbsp;</div><div class="pull-right"><strong>'+ addCommas(totalValue.toFixed(2)) +'</strong></div></div><br>';
+            totalPemasukanView += '<div><div class="pull-left"><strong>TOTAL BAKI : </strong>&nbsp;&nbsp;</div><div class="pull-right"><strong>'+ addCommas(totalValue3.toFixed(2)) +'</strong></div></div><br>';
+            $('.notifyjs-container .total-setoran span').html(totalPemasukanView);
         }catch (e) {
         }
-        baki = pemasukan - pengeluaran;
-        totalValue2 = calculateTotal($, 'pemasukan');
-        totalValue3 = totalValue2 - totalValue;
-        $('#total-'+ strID).html(addCommas(baki));
-        $('#total-baki').html('<strong>'+ addCommas(totalValue3) +'</strong>');
-        $('#total-pengeluaran').html('<strong>'+ addCommas(totalValue) +'</strong>');
-        var totalPemasukanView = '<div><div class="pull-left"><strong>TOTAL PENDAPATAN : </strong>&nbsp;&nbsp;</div><div class="pull-right"><strong>'+ addCommas(totalValue2) +'</strong></div></div><br>';
-        totalPemasukanView += '<div><div class="pull-left"><strong>TOTAL PENGELUARAN : </strong>&nbsp;&nbsp;</div><div class="pull-right"><strong>'+ addCommas(totalValue) +'</strong></div></div><br>';
-        totalPemasukanView += '<div><div class="pull-left"><strong>TOTAL BAKI : </strong>&nbsp;&nbsp;</div><div class="pull-right"><strong>'+ addCommas(totalValue3) +'</strong></div></div><br>';
-        $('.notifyjs-container .total-setoran span').html(totalPemasukanView);
     });
     $('.pemasukan-value').keyup();
     $('.pengeluaran-value').keyup();

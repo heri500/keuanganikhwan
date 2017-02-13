@@ -89,8 +89,8 @@ tr.old-row{
 th{
     vertical-align: middle !important;
 }
-.form-inline label{
-    margin: 0 10px !important;
+.form-inline label, .form-inline input, .form-inline select, .form-inline .select2-container{
+    margin: 0 10px 0 0 !important;
 }
 .form-inline div .form-item{
     margin-bottom: 10px !important;

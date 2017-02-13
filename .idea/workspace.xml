@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8421c9bb-6b49-4646-9e20-867aac18c1d6" name="Default" comment="" />
+    <list default="true" id="8421c9bb-6b49-4646-9e20-867aac18c1d6" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/data_premis/data_premis.api.php.inc" afterPath="$PROJECT_DIR$/sites/all/modules/data_premis/data_premis.api.php.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/data_premis/js/list_premis.js" afterPath="$PROJECT_DIR$/sites/all/modules/data_premis/js/list_premis.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/ikhwan_core/css/custom-style.css" afterPath="$PROJECT_DIR$/sites/all/modules/ikhwan_core/css/custom-style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.api.php.inc" afterPath="$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.api.php.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/pemasukan_pengeluaran/js/input_pemasukan.js" afterPath="$PROJECT_DIR$/sites/all/modules/pemasukan_pengeluaran/js/input_pemasukan.js" />
+    </list>
     <ignored path="keuanganikhwan.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -23,51 +31,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="ikhwan_core.api.php.inc" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ikhwan_core.api.php.inc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.api.php.inc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="50100">
-              <caret line="2004" column="10" selection-start-line="2001" selection-start-column="8" selection-end-line="2004" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="data_overhead.api.php.inc" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/data_overhead/data_overhead.api.php.inc">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22300">
-              <caret line="892" column="84" selection-start-line="892" selection-start-column="53" selection-end-line="892" selection-end-column="84" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="setoran_pengeluaran.api.php.inc" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/setoran_pengeluaran.api.php.inc">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-939">
-              <caret line="86" column="13" selection-start-line="86" selection-start-column="13" selection-end-line="86" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="setoran_pengeluaran.module" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/setoran_pengeluaran.module">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="21" column="28" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="input_setoran.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/js/input_setoran.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1150">
-              <caret line="46" column="10" selection-start-line="46" selection-start-column="10" selection-end-line="46" selection-end-column="10" />
+            <state relative-caret-position="161">
+              <caret line="1507" column="3" selection-start-line="1507" selection-start-column="3" selection-end-line="1507" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -76,38 +44,8 @@
       <file leaf-file-name="custom-style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/css/custom-style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="input_oh.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/data_overhead/js/input_oh.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="575">
-              <caret line="23" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="23" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="setoran_pengeluaran.install" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/setoran_pengeluaran.install">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="setoran_pengeluaran.schema.inc" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/setoran_pengeluaran.schema.inc">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4350">
-              <caret line="174" column="2" selection-start-line="174" selection-start-column="2" selection-end-line="174" selection-end-column="2" />
+            <state relative-caret-position="2275">
+              <caret line="91" column="7" selection-start-line="91" selection-start-column="7" selection-end-line="91" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -116,22 +54,64 @@
       <file leaf-file-name="data_premis.api.php.inc" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sites/all/modules/data_premis/data_premis.api.php.inc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7750">
-              <caret line="310" column="9" selection-start-line="310" selection-start-column="9" selection-end-line="310" selection-end-column="9" />
+            <state relative-caret-position="136">
+              <caret line="210" column="29" selection-start-line="210" selection-start-column="29" selection-end-line="210" selection-end-column="29" />
               <folding>
-                <marker date="1486262976461" expanded="true" signature="5062:5129" placeholder="SELECT COUNT... " />
-                <marker date="1486262976461" expanded="true" signature="5250:5420" placeholder="SELECT SUM(o... " />
+                <marker date="1486981697391" expanded="true" signature="5750:5817" placeholder="SELECT COUNT... " />
+                <marker date="1486981697391" expanded="true" signature="5938:6108" placeholder="SELECT SUM(o... " />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="list_premis.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/data_premis/js/list_premis.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="350">
+              <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="list_zone.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/js/list_zone.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="input_pemasukan.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/pemasukan_pengeluaran/js/input_pemasukan.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="600">
+              <caret line="93" column="12" selection-start-line="93" selection-start-column="12" selection-end-line="93" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pemasukan_pengeluaran.module" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/pemasukan_pengeluaran/pemasukan_pengeluaran.module">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="9" column="69" selection-start-line="9" selection-start-column="69" selection-end-line="9" selection-end-column="69" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/sites/all/modules/ikhwan_core/js/list_zone.js" />
         <option value="$PROJECT_DIR$/sites/all/modules/data_premis/data_premis.install" />
         <option value="$PROJECT_DIR$/sites/all/modules/data_premis/data_premis.info" />
         <option value="$PROJECT_DIR$/sites/all/modules/ikhwan_core/js/pengeluaran_assignment.js" />
@@ -141,7 +121,6 @@
         <option value="$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.schema.inc" />
         <option value="$PROJECT_DIR$/sites/all/modules/data_overhead/data_overhead.schema.inc" />
         <option value="$PROJECT_DIR$/sites/all/modules/data_overhead/data_overhead.module" />
-        <option value="$PROJECT_DIR$/sites/all/modules/data_premis/js/list_premis.js" />
         <option value="$PROJECT_DIR$/sites/all/modules/data_overhead/data_overhead.install" />
         <option value="$PROJECT_DIR$/sites/all/modules/data_premis/data_premis.module" />
         <option value="$PROJECT_DIR$/sites/all/modules/ikhwan_core/js/list_user_zone.js" />
@@ -149,22 +128,31 @@
         <option value="$PROJECT_DIR$/sites/all/modules/formtable/formtable.module" />
         <option value="$PROJECT_DIR$/sites/all/modules/pines_notify/pines_notify.module" />
         <option value="$PROJECT_DIR$/sites/all/modules/ikhwan_core/js/jquery.masknumber.js" />
-        <option value="$PROJECT_DIR$/sites/all/modules/data_overhead/js/input_oh.js" />
-        <option value="$PROJECT_DIR$/sites/all/modules/data_premis/data_premis.api.php.inc" />
         <option value="$PROJECT_DIR$/sites/all/modules/ikhwan_core/js/assignment_zone.js" />
         <option value="$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.module" />
         <option value="$PROJECT_DIR$/sites/all/modules/highcharts/highcharts.module" />
-        <option value="$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.chart.inc" />
-        <option value="$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.api.php.inc" />
         <option value="$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/setoran_pengeluaran.info" />
         <option value="$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/setoran_pengeluaran.install" />
         <option value="$PROJECT_DIR$/sites/all/modules/data_overhead/data_overhead.api.php.inc" />
         <option value="$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.install" />
-        <option value="$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/setoran_pengeluaran.module" />
-        <option value="$PROJECT_DIR$/sites/all/modules/ikhwan_core/css/custom-style.css" />
         <option value="$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/js/input_setoran.js" />
         <option value="$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/setoran_pengeluaran.schema.inc" />
         <option value="$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/setoran_pengeluaran.api.php.inc" />
+        <option value="$PROJECT_DIR$/sites/all/modules/pemasukan_pengeluaran/pemasukan_pengeluaran.info" />
+        <option value="$PROJECT_DIR$/sites/all/modules/pemasukan_pengeluaran/pemasukan_pengeluaran.install" />
+        <option value="$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/setoran_pengeluaran.module" />
+        <option value="$PROJECT_DIR$/sites/all/modules/pemasukan_pengeluaran/pemasukan_pengeluaran.schema.inc" />
+        <option value="$PROJECT_DIR$/sites/all/modules/data_overhead/js/input_oh.js" />
+        <option value="$PROJECT_DIR$/sites/all/modules/ikhwan_core/js/list_zone.js" />
+        <option value="$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.chart.inc" />
+        <option value="$PROJECT_DIR$/sites/all/modules/pemasukan_pengeluaran/pemasukan_pengeluaran.api.php.inc" />
+        <option value="$PROJECT_DIR$/sites/all/modules/pemasukan_pengeluaran/pemasukan_pengeluaran.module" />
+        <option value="$PROJECT_DIR$/sites/all/modules/datatables/views/datatables-view.tpl.php" />
+        <option value="$PROJECT_DIR$/sites/all/modules/ikhwan_core/css/custom-style.css" />
+        <option value="$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.api.php.inc" />
+        <option value="$PROJECT_DIR$/sites/all/modules/data_premis/js/list_premis.js" />
+        <option value="$PROJECT_DIR$/sites/all/modules/pemasukan_pengeluaran/js/input_pemasukan.js" />
+        <option value="$PROJECT_DIR$/sites/all/modules/data_premis/data_premis.api.php.inc" />
       </list>
     </option>
   </component>
@@ -230,6 +218,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -399,7 +388,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ikhwan_core" />
+              <option name="myItemId" value="pemasukan_pengeluaran" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -425,63 +414,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ikhwan_core" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="keuanganikhwan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="keuanganikhwan" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data_overhead" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="keuanganikhwan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="keuanganikhwan" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data_overhead" />
+              <option name="myItemId" value="pemasukan_pengeluaran" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -489,9 +422,34 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="keuanganikhwan" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="keuanganikhwan" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sites" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="all" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data_premis" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -585,11 +543,25 @@
       <workItem from="1486698454363" duration="643000" />
       <workItem from="1486717863494" duration="13557000" />
       <workItem from="1486807586860" duration="633000" />
+      <workItem from="1486872415287" duration="3574000" />
+      <workItem from="1486882301043" duration="17430000" />
+      <workItem from="1486950308758" duration="1644000" />
+      <workItem from="1486958256438" duration="693000" />
+      <workItem from="1486966039169" duration="603000" />
+      <workItem from="1486968363911" duration="2470000" />
     </task>
+    <task id="LOCAL-00001" summary="Pendapatan dan Pengeluaran Zon">
+      <created>1486937408129</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1486937408129</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="277835000" />
+    <option name="totallyTimeSpent" value="304249000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
@@ -604,6 +576,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -625,6 +598,11 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <MESSAGE value="Pendapatan dan Pengeluaran Zon" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pendapatan dan Pengeluaran Zon" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <option name="time" value="1" />
@@ -632,97 +610,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/select2/select2.api.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/data_premis/data_premis.install">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="15" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="25" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/js/list_zone.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/js/graphicomset.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/js/list_assignment.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="1" column="8" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/js/pengeluaran_assignment.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="33" column="15" selection-start-line="33" selection-start-column="15" selection-end-line="33" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/database/database.inc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="793" column="18" selection-start-line="793" selection-start-column="18" selection-end-line="793" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/database/query.inc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13050">
-          <caret line="525" column="18" selection-start-line="525" selection-start-column="18" selection-end-line="525" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/data_premis/data_premis.schema.inc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="761">
-          <caret line="150" column="11" selection-start-line="150" selection-start-column="9" selection-end-line="150" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/js/list_user_zone.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1425">
-          <caret line="57" column="56" selection-start-line="57" selection-start-column="56" selection-end-line="57" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/data_premis/data_premis.module">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1225">
-          <caret line="49" column="56" selection-start-line="49" selection-start-column="28" selection-end-line="49" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/charts/charts.module">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8325">
-          <caret line="336" column="23" selection-start-line="336" selection-start-column="23" selection-end-line="336" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/charts/charts.api.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="761">
-          <caret line="192" column="0" selection-start-line="192" selection-start-column="0" selection-end-line="192" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/js/graphiclaba.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -849,13 +736,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.chart.inc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="22" column="26" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.info">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -867,13 +747,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="200">
           <caret line="8" column="31" selection-start-line="5" selection-start-column="0" selection-end-line="8" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.module">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2000">
-          <caret line="80" column="41" selection-start-line="80" selection-start-column="28" selection-end-line="80" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -915,89 +788,191 @@
     <entry file="file://$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/setoran_pengeluaran.info">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
-          <caret line="9" column="37" selection-start-line="9" selection-start-column="37" selection-end-line="9" selection-end-column="37" />
+          <caret line="9" column="21" selection-start-line="0" selection-start-column="0" selection-end-line="9" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/data_overhead/js/input_oh.js">
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/pemasukan_pengeluaran/pemasukan_pengeluaran.info">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="23" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="23" selection-end-column="1" />
-          <folding />
+        <state relative-caret-position="175">
+          <caret line="7" column="39" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/data_premis/data_premis.api.php.inc">
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/setoran_pengeluaran.schema.inc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7750">
-          <caret line="310" column="9" selection-start-line="310" selection-start-column="9" selection-end-line="310" selection-end-column="9" />
-          <folding>
-            <marker date="1486262976461" expanded="true" signature="5062:5129" placeholder="SELECT COUNT... " />
-            <marker date="1486262976461" expanded="true" signature="5250:5420" placeholder="SELECT SUM(o... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/css/custom-style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="12" />
-          <folding />
+        <state relative-caret-position="3500">
+          <caret line="140" column="10" selection-start-line="131" selection-start-column="8" selection-end-line="140" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/setoran_pengeluaran.install">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="500">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="43" />
-          <folding />
+          <caret line="23" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="25" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/js/input_setoran.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1150">
-          <caret line="46" column="10" selection-start-line="46" selection-start-column="10" selection-end-line="46" selection-end-column="10" />
-          <folding />
+        <state relative-caret-position="475">
+          <caret line="40" column="26" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/setoran_pengeluaran.schema.inc">
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/pemasukan_pengeluaran/pemasukan_pengeluaran.install">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4350">
-          <caret line="174" column="2" selection-start-line="174" selection-start-column="2" selection-end-line="174" selection-end-column="2" />
-          <folding />
+        <state relative-caret-position="550">
+          <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/data_overhead/data_overhead.api.php.inc">
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/pemasukan_pengeluaran/pemasukan_pengeluaran.schema.inc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22300">
-          <caret line="892" column="84" selection-start-line="892" selection-start-column="53" selection-end-line="892" selection-end-column="84" />
-          <folding />
+        <state relative-caret-position="761">
+          <caret line="88" column="8" selection-start-line="88" selection-start-column="8" selection-end-line="88" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/setoran_pengeluaran.module">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="21" column="28" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="28" />
-          <folding />
+        <state relative-caret-position="100">
+          <caret line="10" column="62" selection-start-line="10" selection-start-column="62" selection-end-line="10" selection-end-column="62" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.api.php.inc">
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/data_overhead/data_overhead.api.php.inc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50100">
-          <caret line="2004" column="10" selection-start-line="2001" selection-start-column="8" selection-end-line="2004" selection-end-column="10" />
-          <folding />
+        <state relative-caret-position="299">
+          <caret line="66" column="40" selection-start-line="66" selection-start-column="39" selection-end-line="66" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/data_overhead/js/input_oh.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="28" column="22" selection-start-line="27" selection-start-column="8" selection-end-line="28" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/mobile_detect/mobile_detect.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="108" column="30" selection-start-line="108" selection-start-column="11" selection-end-line="108" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/datatables/js/datatables.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/datatables/views/datatables-view.tpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="26" column="9" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/setoran_pengeluaran/setoran_pengeluaran.api.php.inc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-939">
-          <caret line="86" column="13" selection-start-line="86" selection-start-column="13" selection-end-line="86" selection-end-column="13" />
+        <state relative-caret-position="255">
+          <caret line="48" column="23" selection-start-line="48" selection-start-column="8" selection-end-line="48" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/datatables/datatables.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5085">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/datatables/views/datatables_style_plugin.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3689">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="80" column="41" selection-start-line="80" selection-start-column="28" selection-end-line="80" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.chart.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-410">
+          <caret line="196" column="30" selection-start-line="193" selection-start-column="16" selection-end-line="196" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/pemasukan_pengeluaran/pemasukan_pengeluaran.api.php.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4425">
+          <caret line="6" column="54" selection-start-line="6" selection-start-column="54" selection-end-line="6" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/pemasukan_pengeluaran/pemasukan_pengeluaran.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="9" column="69" selection-start-line="9" selection-start-column="69" selection-end-line="9" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/css/custom-style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2275">
+          <caret line="91" column="7" selection-start-line="91" selection-start-column="7" selection-end-line="91" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/data_premis/js/list_premis.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/js/list_zone.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/pemasukan_pengeluaran/js/input_pemasukan.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="93" column="12" selection-start-line="93" selection-start-column="12" selection-end-line="93" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/data_premis/data_premis.api.php.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="210" column="29" selection-start-line="210" selection-start-column="29" selection-end-line="210" selection-end-column="29" />
+          <folding>
+            <marker date="1486981697391" expanded="true" signature="5750:5817" placeholder="SELECT COUNT... " />
+            <marker date="1486981697391" expanded="true" signature="5938:6108" placeholder="SELECT SUM(o... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/ikhwan_core/ikhwan_core.api.php.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="1507" column="3" selection-start-line="1507" selection-start-column="3" selection-end-line="1507" selection-end-column="3" />
           <folding />
         </state>
       </provider>
