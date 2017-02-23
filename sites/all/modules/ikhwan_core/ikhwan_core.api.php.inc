@@ -401,13 +401,13 @@ function listZone($month = null, $year = null){
                 'bSearchable' => TRUE,
             ),
         ),
-        array(
+        /*array(
             'data' => t('Alamat'),
             'datatable_options' => array(
                 'bSortable' => TRUE,
                 'bSearchable' => TRUE,
             ),
-        ),
+        ),*/
         array(
             'data' => t('Telephone'),
             'datatable_options' => array(
@@ -471,30 +471,36 @@ function listZone($month = null, $year = null){
         $zoneData = array();
         $zoneData[] = $dataZone[$i]->zone;
         $zoneData[] = $dataZone[$i]->nama;
-        $zoneData[] = $dataZone[$i]->alamat;
+        //$zoneData[] = $dataZone[$i]->alamat;
         $zoneData[] = $dataZone[$i]->telepon;
         $zoneData[] = $dataZone[$i]->whatsapp;
         if (isset($dataPendapatan[$dataZone[$i]->zone])){
-            $pendapatanZone = number_format(
+            $pendapatanZone = $dataPendapatan[$dataZone[$i]->zone]->total_pemasukan;
+            $pendapatanZoneView = number_format(
                 $dataPendapatan[$dataZone[$i]->zone]->total_pemasukan,2,'.',','
             );
-            $pengeluaranZone = number_format(
-                $dataPendapatan[$dataZone[$i]->zone]->total_pengeluaran,2,'.',','
+            $pengeluaranZone = $dataPendapatan[$dataZone[$i]->zone]->total_pengeluaran;
+            $pengeluaranZoneView = number_format(
+                $pengeluaranZone, 2,'.',','
             );
-            $bakiZone = number_format(
-                $dataPendapatan[$dataZone[$i]->zone]->total_baki,2,'.',','
+            $bakiZone = $dataPendapatan[$dataZone[$i]->zone]->total_baki;
+            $bakiZoneView = number_format(
+                $bakiZone,2,'.',','
             );
         }else{
             $pendapatanZone = 0;
+            $pendapatanZoneView = 0;
             $pengeluaranZone = 0;
+            $pengeluaranZoneView = 0;
             $bakiZone = 0;
+            $bakiZoneView = 0;
         }
         $totalPendapatan = $totalPendapatan + $pendapatanZone;
         $totalPengeluaran = $totalPengeluaran + $pengeluaranZone;
         $totalBaki = $totalBaki + $bakiZone;
-        $zoneData[] = array('data' => $pendapatanZone, 'class' => 'align-right');
-        $zoneData[] = array('data' => $pengeluaranZone, 'class' => 'align-right');
-        $zoneData[] = array('data' => $bakiZone, 'class' => 'align-right');
+        $zoneData[] = array('data' => $pendapatanZoneView, 'class' => 'align-right');
+        $zoneData[] = array('data' => $pengeluaranZoneView, 'class' => 'align-right');
+        $zoneData[] = array('data' => $bakiZoneView, 'class' => 'align-right');
         $editIcon = '<i class="fa fa-edit"></i>';
         $editButtonVar = array(
             'element' => array(
@@ -530,7 +536,7 @@ function listZone($month = null, $year = null){
     $footer[] = array(
         array(
             'data' => '<strong>'.t('TOTAL').'</strong>',
-            'colspan' => 5,
+            'colspan' => 4,
             'class' => 'align-right',
         ),
         array(
@@ -1942,12 +1948,53 @@ function total_by_zon_chart($assignmentId = null, $zone = null, $month = null, $
     return $chart;
 }
 
+function menu_dashboard_report(){
+    $dashboardMenu = array();
+    $assignmentButton = array(
+        'element' => array(
+            '#attributes' => array(
+                'class' => array('btn-primary'),
+                'id' => 'assigment-chart',
+                'name' => 'assigment-chart',
+            ),
+            '#button_type' => 'button',
+            '#value' => t('ASSIGNMENT ZON'),
+        )
+    );
+    $dashboardMenu[] = theme('button', $assignmentButton);
+    $overheadButton = array(
+        'element' => array(
+            '#attributes' => array(
+                'class' => array('btn-success'),
+                'id' => 'overhead-chart',
+                'name' => 'overhead-chart',
+            ),
+            '#button_type' => 'button',
+            '#value' => t('OVERHEAD ZON'),
+        )
+    );
+    $dashboardMenu[] = theme('button', $overheadButton);
+    $cashflowButton = array(
+        'element' => array(
+            '#attributes' => array(
+                'class' => array('btn-warning'),
+                'id' => 'cashflow-chart',
+                'name' => 'cashflow-chart',
+            ),
+            '#button_type' => 'button',
+            '#value' => t('CASHFLOW ZON'),
+        )
+    );
+    $dashboardMenu[] = theme('button', $cashflowButton);
+    return $dashboardMenu;
+}
+
 /**
  * @return string
  */
 function ikhwan_chart_dashboard($month = null, $year = null, $zone = null){
     if (empty($month) && empty($year)){
-        if (date('j') <= 15){
+        if (date('j') <= 25){
             $month = date('n', mktime(0,0,0,date('n') - 1,1,date('Y')));
             $year = date('Y', mktime(0,0,0,date('n') - 1,1,date('Y')));
         }else{
@@ -1955,9 +2002,18 @@ function ikhwan_chart_dashboard($month = null, $year = null, $zone = null){
             $year = date('Y');
         }
     }
+    drupal_add_js(
+        array(
+            'month' => $month,
+            'year' => $year,
+        )
+        , 'setting'
+    );
     $module_path = drupal_get_path('module','ikhwan_core');
     $csspath = $module_path.'/css/custom-style.css';
     drupal_add_css($csspath);
+    $jspath = $module_path.'/js/dashboard_menu.js';
+    drupal_add_js($jspath,array('scope' => 'footer', 'weight' => 5));
     $jspath = $module_path.'/js/dashboard.js';
     drupal_add_js($jspath,array('scope' => 'footer', 'weight' => 5));
     $jenisAssignment = get_assignment_by_id();
@@ -2003,7 +2059,8 @@ function ikhwan_chart_dashboard($month = null, $year = null, $zone = null){
         $dashBoard .= '</div>';
     }
     $dashBoard .= '</div>';
-    return $monthBeforeButton.$currMonthButton.$dashBoard;
+    $chartMenu = implode('&nbsp;',menu_dashboard_report());
+    return '<div>'.$chartMenu.'</div>'.$monthBeforeButton.$currMonthButton.$dashBoard;
 }
 function pengeluaran_assignment($assigmentId = null){
     if (!empty($assigmentId)){
@@ -2751,4 +2808,83 @@ function user_zone(){
     $form = drupal_get_form('form_user_zone');
     $formUserZone .= drupal_render($form);
     return $formUserZone;
+}
+function overhead_dashboard($month = null, $year = null, $zone = null){
+    if (empty($month) && empty($year)){
+        if (date('j') <= 25){
+            $month = date('n', mktime(0,0,0,date('n') - 1,1,date('Y')));
+            $year = date('Y', mktime(0,0,0,date('n') - 1,1,date('Y')));
+        }else{
+            $month = date('n');
+            $year = date('Y');
+        }
+    }
+    drupal_add_js(
+        array(
+            'month' => $month,
+            'year' => $year,
+        )
+        , 'setting'
+    );
+    $module_path = drupal_get_path('module','ikhwan_core');
+    $csspath = $module_path.'/css/custom-style.css';
+    drupal_add_css($csspath);
+    $jspath = $module_path.'/js/dashboard_menu.js';
+    drupal_add_js($jspath,array('scope' => 'footer', 'weight' => 5));
+    $jspath = $module_path.'/js/dashboard_overhead.js';
+    drupal_add_js($jspath,array('scope' => 'footer', 'weight' => 5));
+    $monthBeforeButtonVar = array(
+        'element' => array(
+            '#attributes' => array(
+                'class' => array('btn-warning btn-sm'),
+                'id' => 'month-before',
+                'name' => 'month-before',
+            ),
+            '#button_type' => 'button',
+            '#value' => date('F', mktime(0,0,0,date('n') -1,1,date('Y'))),
+        )
+    );
+    $monthBeforeButton = theme('button', $monthBeforeButtonVar);
+    $monthBefore = date('Y', mktime(0,0,0,date('n') - 1, 1, date('Y'))).'_'.date('n', mktime(0,0,0,date('n') - 1, 1, date('Y')));
+    $monthBeforeButton .= '<input type="hidden" id="month_before" name="month_before" value="'.$monthBefore.'">';
+    $currMonthButtonVar = array(
+        'element' => array(
+            '#attributes' => array(
+                'class' => array('btn-primary btn-sm'),
+                'id' => 'curr-month',
+                'name' => 'curr-month',
+            ),
+            '#button_type' => 'button',
+            '#value' => date('F'),
+        )
+    );
+    $currMonthButton = theme('button', $currMonthButtonVar);
+    $currMonthButton .= '<input type="hidden" id="curr_month" name="curr_month" value="'.date('Y').'_'.date('n').'">';
+    $dashBoard = '<div class="col-md-12 main-chart">';
+    $dashBoard .= overhead_total_3d_column_chart($month, $year, $zone,'#7cb5ec');
+    $dashBoard .= '</div>';
+    $chartMenu = implode('&nbsp;',menu_dashboard_report());
+    return '<div>'.$chartMenu.'</div>'.$monthBeforeButton.$currMonthButton.$dashBoard;
+}
+function set_user_number_format(&$desIn, &$desOut, &$separator){
+    global $user;
+    $lang = $user->language;
+    if ($lang == 'id' || empty($lang)){
+        $desIn = '.';
+        $desOut = ',';
+        $separator = '.';
+    }else{
+        $desIn = '.';
+        $desOut = '.';
+        $separator = ',';
+    }
+    drupal_add_js(
+        array(
+            'desIn' => $desIn,
+            'desOut' => $desOut,
+            'separator' => $separator,
+            'language' => $lang,
+        )
+        , 'setting'
+    );
 }

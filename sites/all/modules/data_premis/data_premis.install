@@ -24,3 +24,14 @@ function data_premis_schema() {
     require 'data_premis.schema.inc';
     return $schema;
 }
+function data_premis_update_7001(){
+    $currency = array(
+        'type' => 'varchar',
+        'length' => 10,
+        'not null' => TRUE,
+        'default' => 'IDR',
+        'description' => 'Currency for unit/premis',
+    );
+    $return = db_add_field( 'zdatapremis', 'currency', $currency);
+    return $return;
+}

@@ -252,3 +252,123 @@ function assignment_all_3d_column_stacked_chart_options($assignmentData = null){
     }
     return $options;
 }
+function overhead_total_3d_column_chart($month = null, $year = null, $zone = null, $seriesColor = null)
+{
+    $ohTotal = '';
+    $getDataZone = getZoneByCode();
+    $namaZone = array();
+    if (count($getDataZone)) {
+        for ($i = 0; $i < count($getDataZone); $i++) {
+            $namaZone[$getDataZone[$i]->zone] = $getDataZone[$i]->nama;
+        }
+    }
+    $arrOverhead = array();
+    if (function_exists('get_total_overhead_by_zone_converted')){
+        $arrOverhead = get_total_overhead_by_zone_converted($month, $year, $zone);
+    }
+    $overheadData = array();
+    $seriesData = array();
+    $intDate = mktime(7, 0, 0, $month, 1, $year);
+    $totalOverhead = 0;
+    if (count($arrOverhead)) {
+        foreach ($arrOverhead as $idxZone => $ohTotal) {
+            $overheadData['categories'][] = $namaZone[$idxZone];
+            $seriesData[] = (float)$ohTotal;
+            $totalOverhead = $totalOverhead + (float)$ohTotal;
+        }
+    }
+    $overheadData['title'] = 'OVERHEAD ZON ' . date('M Y', $intDate);
+    $overheadData['subtitle'] = 'TOTAL OVERHEAD : RM. '.number_format($totalOverhead,0,',','.');
+    $overheadData['series'] = (object)array(
+        'name' => t('OVERHEAD'),
+        'data' => $seriesData,
+    );
+    $options = overhead_total_3d_column_chart_options($overheadData, $seriesColor);
+    if (is_object($options)) {
+        // Optionally add styles or any other valid attributes, suitable for
+        // drupal_attributes().
+        $attributes = array('style' => array('height: 450px;'));
+
+        // Return block definition.
+        $overheadTotal = highcharts_render($options, $attributes);
+    }
+    return $overheadTotal;
+}
+
+function overhead_total_3d_column_chart_options($assignmentData = null, $seriesColor = null){
+    $options = null;
+    if (!empty($assignmentData)) {
+        $options = new stdClass();
+        // Chart.
+        $options->chart = (object)array(
+            'renderTo' => 'container',
+            'type' => 'column',
+            'backgroundColor' => 'transparent',
+            'marginTop' => '30',
+            'options3d' => (object)array(
+                'enabled' => TRUE,
+                'alpha' => 15,
+                'beta' => 15,
+                'viewDistance' => 25,
+                'depth' => 60,
+            ),
+        );
+        // Title.
+        $options->title = new stdClass();
+        $options->title->text = strtoupper($assignmentData['title']);
+        $options->subtitle = new stdClass();
+        $options->subtitle->text = strtoupper($assignmentData['subtitle']);
+        // Plot options.
+        $options->plotOptions = new stdClass();
+        $options->plotOptions->column = (object)array(
+            'depth' => 35,
+        );
+        if (!empty($seriesColor)){
+            $options->plotOptions->series = (object)array(
+                'color' => $seriesColor,
+            );
+        }
+        //X-axis.
+        $options->xAxis = new stdClass();
+        $options->xAxis = (object)array(
+            'categories' => $assignmentData['categories'],
+        );
+
+        //Y-axis
+        $options->yAxis = new stdClass();
+        $options->yAxis = (object)array(
+            'title' => (object)array(
+                'text' => 'Total OH ('.variable_get('google_currency_converter_to', '').')',
+            ),
+        );
+
+        // Legend.
+        $options->legend = new stdClass();
+        $options->legend = (object)array(
+            'enabled' => false,
+        );
+
+        // Series.
+        $options->series = array();
+        $series = new StdClass();
+        $series->name = $assignmentData['series']->name;
+        $series->data = $assignmentData['series']->data;
+        /*$series->dataLabels = (object)array(
+            'enabled' => true,
+            'rotation' => -90,
+            'color' => '#FFFFFF',
+            'align' => 'right',
+            'format' => '{point.y}',
+            'y' => 10, // 10 pixels down from the top
+            'style' => (object)array(
+                'fontSize' => '13px',
+                'fontFamily' => 'Verdana, sans-serif',
+            ),
+        );*/
+        $options->series[] = $series;
+        // Disable credits.
+        $options->credits = new stdClass();
+        $options->credits->enabled = FALSE;
+    }
+    return $options;
+}

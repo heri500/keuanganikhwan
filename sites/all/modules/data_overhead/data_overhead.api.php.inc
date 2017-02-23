@@ -748,6 +748,14 @@ function create_overhead_entry_footer($idpremis = null){
     return $tableHeader;
 }
 function create_overhead_entry_row($idpremis = null){
+    global $user;
+    if (function_exists('set_user_number_format')){
+        set_user_number_format($desIn, $desOut, $separator);
+    }else{
+        $desIn = '.';
+        $desOut = ',';
+        $separator = '.';
+    }
     $tableRow = array();
     $tableRow['#tree'] = TRUE;
     $overheadStaffData = get_data_overhead_staff($idpremis);
@@ -790,7 +798,7 @@ function create_overhead_entry_row($idpremis = null){
                         );
                         $colData['value-' . $idCategory . '-' . $overheadData->id] = array(
                             '#type' => 'item',
-                            '#title' => number_format($overheadData->default_value, 0, ',', '.'),
+                            '#title' => number_format($overheadData->default_value, 0, $desOut, $separator),
                             '#attributes' => array('outerclass' => array('align-right')),
                         );
                         if (isset($overheadStaffData[$overheadData->id]) && isset($overheadStaffData[$overheadData->id]['UNIT'])) {
@@ -840,7 +848,7 @@ function form_entry_overhead($form, &$form_state, $variables = null){
         $dataPremis = get_data_premis_by_id(null,$variables['idpremis']);
         $form['basic'] = array(
             '#type' => 'fieldset',
-            '#title' => 'DATA OVERHEAD STAFF '.$dataPremis->nama,
+            '#title' => 'DATA OVERHEAD STAFF '.strtoupper($dataPremis->nama),
             '#collapsible' => FALSE, // Added
             '#collapsed' => FALSE,  // Added
         );
@@ -868,6 +876,13 @@ function form_entry_overhead($form, &$form_state, $variables = null){
 }
 function form_entry_overhead_submit($form, &$form_state){
     global $user;
+    if (function_exists('set_user_number_format')){
+        set_user_number_format($desIn, $desOut, $separator);
+    }else{
+        $desIn = '.';
+        $desOut = ',';
+        $separator = '.';
+    }
     if (isset($form_state['values']['rows'])) {
         $values = $form_state['values']['rows'];
     } else {
@@ -888,7 +903,8 @@ function form_entry_overhead_submit($form, &$form_state){
                     }else{
                         $savedValues['id_staff'] = $explodeIdx2[2];
                     }
-                    $calcValue = str_replace('.','',$dataStaff);
+                    $calcValue = str_replace($separator,'',$dataStaff);
+                    $calcValue = str_replace($desOut,'.',$calcValue);
                     $savedValues['overhead_entry'] = $dataStaff;
                     $savedValues['overhead_value'] = eval('return '.$calcValue.';');
                     if ($savedValues['overhead_value'] > 0) {

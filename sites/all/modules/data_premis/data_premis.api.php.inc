@@ -7,10 +7,27 @@ function array_jabatan_premis(){
 }
 function list_premis($month = null, $year = null){
     global $user;
+    if (function_exists('set_user_number_format')){
+        set_user_number_format($desIn, $desOut, $separator);
+    }else{
+        $desIn = '.';
+        $desOut = ',';
+        $separator = '.';
+    }
     if (!empty($month) && !empty($year)){
     }else{
         $month = date('n');
         $year = date('Y');
+    }
+    if (function_exists('get_total_setoran_premis')){
+        $dataSetoran = get_total_setoran_premis($month, $year);
+    }else{
+        $dataSetoran = array();
+    }
+    if (function_exists('get_total_pengeluaran_oh_by_premis')){
+        $dataPengeluaran = get_total_pengeluaran_oh_by_premis($month, $year);
+    }else{
+        $dataPengeluaran = array();
     }
     $intDate = mktime(7,0,0,$month,1,$year);
     $core_module_path = drupal_get_path('module','ikhwan_core');
@@ -25,6 +42,7 @@ function list_premis($month = null, $year = null){
         'bInfo'     => TRUE,
         'bStateSave' => TRUE,
         'sPaginationType' => 'full_numbers',
+        'footerCallback' => 'function(row, data, start, end, display){ alert(\'Test\'); }',
     );
     // Define table columns
     $header = array(
@@ -42,15 +60,15 @@ function list_premis($month = null, $year = null){
                 'bSearchable' => TRUE,
             ),
         ),
-        array(
+        /*array(
             'data' => t('Alamat'),
             'datatable_options' => array(
                 'bSortable' => TRUE,
                 'bSearchable' => TRUE,
             ),
-        ),
+        ),*/
         array(
-            'data' => t('Telephone'),
+            'data' => t('Currency'),
             'datatable_options' => array(
                 'bSortable' => TRUE,
                 'bSearchable' => TRUE,
@@ -73,7 +91,23 @@ function list_premis($month = null, $year = null){
             ),
         ),
         array(
+            'data' => t('Saldo').' ('.date('M', $intDate).')',
+            'class' => array('col-input-number align-center'),
+            'datatable_options' => array(
+                'bSortable' => TRUE,
+                'bSearchable' => TRUE,
+            ),
+        ),
+        array(
             'data' => t('Total OH'),
+            'class' => array('col-input-number align-center'),
+            'datatable_options' => array(
+                'bSortable' => TRUE,
+                'bSearchable' => TRUE,
+            ),
+        ),
+        array(
+            'data' => t('Kekurangan'),
             'class' => array('col-input-number align-center'),
             'datatable_options' => array(
                 'bSortable' => TRUE,
@@ -161,6 +195,12 @@ function list_premis($month = null, $year = null){
         }
     }
     $rows = array();
+    $totalSetoran = 0;
+    $totalPengeluaran = 0;
+    $totalSaldo = 0;
+    $gtOverhead = 0;
+    $gtOverheadHarian = 0;
+    $totalKekurangan = 0;
     for ($i = 0;$i < count($dataPremis);$i++){
         if ($keuanganZone){
             $detailPremis = get_data_premis_by_id(null, $dataPremis[$i]);
@@ -204,12 +244,32 @@ function list_premis($month = null, $year = null){
                 $premisData[] = '-';
             }
             $premisData[] = $detailPremis->nama;
-            $premisData[] = $detailPremis->alamat;
-            $premisData[] = $detailPremis->telepon;
-            $premisData[] = 0;
-            $premisData[] = 0;
-            $premisData[] = '<div class="align-right">'.number_format($totalSumOH,0,',','.').'</div>';
-            $premisData[] = '<div class="align-right">'.number_format($totalHarianOH,0,',','.').'</div>';
+            //$premisData[] = $detailPremis->alamat;
+            $premisData[] = $detailPremis->currency;
+            if (isset($dataSetoran[$detailPremis->id])){
+                $setoranPremis = $dataSetoran[$detailPremis->id]->total_setoran;
+            }else{
+                $setoranPremis = 0;
+            }
+            if (isset($dataPengeluaran[$detailPremis->id])) {
+                $pengeluaranPremis = $dataPengeluaran[$detailPremis->id];
+            }else{
+                $pengeluaranPremis = 0;
+            }
+            $saldo = $setoranPremis - $pengeluaranPremis;
+            $totalSetoran = $totalSetoran + $setoranPremis;
+            $totalPengeluaran = $totalPengeluaran + $pengeluaranPremis;
+            $totalSaldo = $totalSaldo + $saldo;
+            $kekurangan = $totalSumOH - $pengeluaranPremis;
+            $totalKekurangan = $totalKekurangan + $kekurangan;
+            $premisData[] = '<div class="align-right">'.number_format($setoranPremis,0,$desOut,$separator).'</div>';
+            $premisData[] = '<div class="align-right">'.number_format($pengeluaranPremis,0,$desOut,$separator).'</div>';
+            $premisData[] = '<div class="align-right">'.number_format($saldo,0,$desOut,$separator).'</div>';
+            $premisData[] = '<div class="align-right">'.number_format($totalSumOH,0,$desOut,$separator).'</div>';
+            $premisData[] = '<div class="align-right">'.number_format($kekurangan,0,$desOut,$separator).'</div>';
+            $gtOverhead = $gtOverhead + $totalSumOH;
+            $premisData[] = '<div class="align-right">'.number_format($totalHarianOH,0,$desOut,$separator).'</div>';
+            $gtOverheadHarian = $gtOverheadHarian + $totalHarianOH;
             $editIcon = '<i class="fa fa-edit"></i>';
             $editButtonVar = array(
                 'element' => array(
@@ -263,7 +323,7 @@ function list_premis($month = null, $year = null){
                         'onclick' => 'setoran_premis(\'' . $detailPremis->id . '\','.$month.','.$year.')',
                     ),
                     '#button_type' => 'button',
-                    '#value' => $addIcon . ' SETORAN&nbsp;&nbsp;',
+                    '#value' => $addIcon . ' '.t('SETORAN').'&nbsp;&nbsp;',
                 )
             );
             $setoranButton = theme('button', $setoranButtonVar);
@@ -291,11 +351,51 @@ function list_premis($month = null, $year = null){
             $rows[] = $premisData;
         }
     }
+    $footer[] = array(
+        array(
+            'data' => '<strong>'.t('TOTAL').'</strong>',
+            'datatable_options' => array(
+                'bSortable' => TRUE,
+                'bSearchable' => TRUE,
+            ),
+            'colspan' => 3,
+            'class' => array('align-right'),
+        ),
+        array(
+            'data' => number_format($totalSetoran,0,$desOut,$separator),
+            'class' => array('col-input-number align-right'),
+        ),
+        array(
+            'data' => number_format($totalPengeluaran,0,$desOut,$separator),
+            'class' => array('col-input-number align-right'),
+        ),
+        array(
+            'data' => number_format($totalSaldo,0,$desOut,$separator),
+            'class' => array('col-input-number align-right'),
+        ),
+        array(
+            'data' => number_format($gtOverhead,0,$desOut,$separator),
+            'class' => array('col-input-number align-right'),
+        ),
+        array(
+            'data' => number_format($totalKekurangan,0,$desOut,$separator),
+            'class' => array('col-input-number align-right'),
+        ),
+        array(
+            'data' => number_format($gtOverheadHarian,0,$desOut,$separator),
+            'class' => array('col-input-number-small align-right'),
+        ),
+        array(
+            'data' => '&nbsp;',
+            'colspan' => 5,
+        ),
+    );
     // Or, render using a theme function.
     $variables = array(
         'attributes' => $attributes,
         'header' => $header,
         'rows' => $rows,
+        'footer' => $footer,
     );
     $newPremisButtonVar = array(
         'element' => array(
@@ -331,6 +431,7 @@ function form_add_premis($idPremis = null){
         $getDataPremis = new stdClass();
         $getDataPremis->zone = '';
         $getDataPremis->nama = '';
+        $getDataPremis->currency = variable_get('google_currency_converter_to', '');
         $getDataPremis->alamat = '';
         $getDataPremis->telepon = '';
         $getDataPremis->whatsapp = '';
@@ -349,7 +450,7 @@ function get_data_premis_by_id($zone = null, $idpremis = null){
     if (!empty($idpremis)){
         $fieldArray = array(
             'id', 'zone', 'nama', 'alamat', 'telepon', 'whatsapp', 'bbm',
-            'telegram', 'email', 'created', 'changed', 'uid', 'uid_changed'
+            'telegram', 'email', 'created', 'changed', 'uid', 'uid_changed', 'currency'
         );
         $dataPremis = getTableDataByField('zdatapremis','access data premis',$fieldArray,null,'id',$idpremis);
         if (count($dataPremis)){
@@ -358,7 +459,7 @@ function get_data_premis_by_id($zone = null, $idpremis = null){
     }else{
         $fieldArray = array(
             'id', 'zone', 'nama', 'alamat', 'telepon', 'whatsapp', 'bbm',
-            'telegram', 'email', 'created', 'changed', 'uid', 'uid_changed'
+            'telegram', 'email', 'created', 'changed', 'uid', 'uid_changed', 'currency'
         );
         if (empty($zone)){
             $dataPremis = getTableDataByField('zdatapremis','access data premis',$fieldArray,'nama');
@@ -426,6 +527,14 @@ function form_data_premis($form, &$form_state, $variables = null){
         '#required' => TRUE,
         '#default_value' => $variables->nama,
     );
+    $form['basic']['currency'] = array(
+        '#type' => 'select',
+        '#title' => t('Currency'),
+        '#options' => google_currency_converter_country_list(),
+        '#default_value' => $variables->currency,
+        '#attributes' => array('class' => array('google-currency-converter-element')),
+        '#required' => TRUE,
+    );
     $form['basic']['alamat'] = array(
         '#title' => t('Alamat'),
         '#type' => 'textarea',
@@ -486,6 +595,7 @@ function form_data_premis_submit($form, &$form_state) {
     $savedData['bbm'] = $values['bbm'];
     $savedData['telegram'] = $values['telegram'];
     $savedData['email'] = $values['email'];
+    $savedData['currency'] = $values['currency'];
     if (isset($values['id']) && !empty($values['id'])){
         if (!empty($savedData['nama'])){
             $updatedData = saveTableData('zdatapremis','admin data premis',$savedData,'id',$values['id']);

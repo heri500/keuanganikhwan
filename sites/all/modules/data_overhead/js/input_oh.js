@@ -9,12 +9,31 @@ function addCommas(nStr){
     }
     return x1 + x2;
 }
+function addSeparatorsNF(nStr, inD, outD, sep)
+{
+    nStr += '';
+    var dpos = nStr.indexOf(inD);
+    var nStrEnd = '';
+    if (dpos != -1) {
+        nStrEnd = outD + nStr.substring(dpos + 1, nStr.length);
+        nStr = nStr.substring(0, dpos);
+    }
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(nStr)) {
+        nStr = nStr.replace(rgx, '$1' + sep + '$2');
+    }
+    return nStr + nStrEnd;
+}
 function calculateTotal($){
     var totalValue = 0;
     $('.input-oh').each(function () {
         if ($(this).val() != ''){
             try {
-                var nilai = $(this).val().replace(/\./g,'');
+                if (Drupal.settings.separator == '.'){
+                    var nilai = $(this).val().replace(/\./g,'');
+                }else{
+                    var nilai = $(this).val().replace(/\,/g,'');
+                }
                 totalValue = totalValue + eval(nilai);
             } catch (e) {
             }
@@ -25,7 +44,7 @@ function calculateTotal($){
 
 jQuery(function ($) {
     $('.input-oh').maskNumber({
-        thousands: '.',
+        thousands: Drupal.settings.separator,
         integer: true,
     });
     $.notify("TOTAL OH SEBULAN : \nTOTAL OH HARIAN : ", {
@@ -37,10 +56,10 @@ jQuery(function ($) {
     });
     $('.input-oh').on('keyup', function () {
         totalValue = calculateTotal($);
-        $('#grand-total').html('<strong>TOTAL PER-BULAN : '+ addCommas(totalValue) +'</strong>');
-        $('#total-harian').html('<strong>TOTAL PER-HARI : '+ addCommas(Math.round(totalValue/30)) +'</strong>');
-        var totalOHView = '<div><div class="pull-left"><strong>TOTAL PER-BULAN : </strong>&nbsp;&nbsp;</div><div class="pull-right"><strong>'+ addCommas(totalValue) +'</strong></div></div><br>';
-        totalOHView += '<div><div class="pull-left"><strong>TOTAL PER-HARI : </strong>&nbsp;&nbsp;</div><div class="pull-right"><strong>'+ addCommas(Math.round(totalValue/30)) +'</strong></div></div><br>';
+        $('#grand-total').html('<strong>TOTAL PER-BULAN : '+ addSeparatorsNF(totalValue, Drupal.settings.desIn, Drupal.settings.desOut, Drupal.settings.separator) +'</strong>');
+        $('#total-harian').html('<strong>TOTAL PER-HARI : '+ addSeparatorsNF(Math.round(totalValue/30), Drupal.settings.desIn, Drupal.settings.desOut, Drupal.settings.separator) +'</strong>');
+        var totalOHView = '<div><div class="pull-left"><strong>TOTAL PER-BULAN : </strong>&nbsp;&nbsp;</div><div class="pull-right"><strong>'+ addSeparatorsNF(totalValue, Drupal.settings.desIn, Drupal.settings.desOut, Drupal.settings.separator) +'</strong></div></div><br>';
+        totalOHView += '<div><div class="pull-left"><strong>TOTAL PER-HARI : </strong>&nbsp;&nbsp;</div><div class="pull-right"><strong>'+ addSeparatorsNF(Math.round(totalValue/30), Drupal.settings.desIn, Drupal.settings.desOut, Drupal.settings.separator) +'</strong></div></div><br>';
         $('.notifyjs-container .total-oh span').html(totalOHView);
     });
     $('.input-oh').keyup();

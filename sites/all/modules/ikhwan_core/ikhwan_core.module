@@ -83,8 +83,16 @@ function ikhwan_core_menu() {
     );
     $items['assignmentdashboard'] = array(
         'title' => t('Assignment Dashboard'),
-        'description' => 'GISBH Assignment Dashborad.',
+        'description' => 'GISBH Assignment Dashboard.',
         'page callback' => 'ikhwan_chart_dashboard',
+        'access arguments' => array('access ikhwan data assignment'),
+        'type' => MENU_CALLBACK,
+        'weight' => 0,
+    );
+    $items['overheaddashboard'] = array(
+        'title' => t('Overhead Dashboard'),
+        'description' => 'GISBH Overhead Dashboard.',
+        'page callback' => 'overhead_dashboard',
         'access arguments' => array('access ikhwan data assignment'),
         'type' => MENU_CALLBACK,
         'weight' => 0,
