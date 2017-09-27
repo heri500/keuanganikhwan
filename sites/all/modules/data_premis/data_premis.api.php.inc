@@ -33,6 +33,7 @@ function list_premis($month = null, $year = null){
     $core_module_path = drupal_get_path('module','ikhwan_core');
     $csspath = $core_module_path.'/css/custom-style.css';
     drupal_add_css($csspath);
+    _add_jeditable_plugins();
     $module_path  = drupal_get_path('module','data_premis');
     $jspath = $module_path.'/js/list_premis.js';
     drupal_add_js($jspath,array('scope' => 'footer', 'weight' => 5));
@@ -48,6 +49,13 @@ function list_premis($month = null, $year = null){
     $header = array(
         array(
             'data' => t('Zone'),
+            'datatable_options' => array(
+                'bSortable' => TRUE,
+                'bSearchable' => TRUE,
+            ),
+        ),
+        array(
+            'data' => t('Negeri'),
             'datatable_options' => array(
                 'bSortable' => TRUE,
                 'bSearchable' => TRUE,
@@ -194,6 +202,17 @@ function list_premis($month = null, $year = null){
             }
         }
     }
+    $namaNegeri = array();
+    if (count($namaZone)){
+        foreach ($namaZone as $idZone => $zoneName){
+            $dataNegeri = get_data_negeri_by_id($idZone);
+            if (count($dataNegeri)){
+                for ($i = 0;$i < count($dataNegeri);$i++){
+                    $namaNegeri[$dataNegeri[$i]->id] = $dataNegeri[$i]->nama;
+                }
+            }
+        }
+    }
     $rows = array();
     $totalSetoran = 0;
     $totalPengeluaran = 0;
@@ -242,6 +261,19 @@ function list_premis($month = null, $year = null){
                 $premisData[] = $namaZone[$detailPremis->zone];
             } else {
                 $premisData[] = '-';
+            }
+            if (!empty($detailPremis->idnegeri) && isset($namaNegeri[$detailPremis->idnegeri])){
+                $premisData[] = array(
+                    'data' => $namaNegeri[$detailPremis->idnegeri],
+                    'class' => 'edit-negeri',
+                    'id' => 'negeri-'.$detailPremis->zone.'-'.$detailPremis->id,
+                );
+            }else{
+                $premisData[] = array(
+                    'data' => '-',
+                    'class' => 'edit-negeri',
+                    'id' => 'negeri-'.$detailPremis->zone.'-'.$detailPremis->id,
+                );
             }
             $premisData[] = $detailPremis->nama;
             //$premisData[] = $detailPremis->alamat;
@@ -423,6 +455,9 @@ function form_add_premis($idPremis = null){
     $module_path = drupal_get_path('module','ikhwan_core');
     $csspath = $module_path.'/css/custom-style.css';
     drupal_add_css($csspath);
+    $module_path  = drupal_get_path('module','data_premis');
+    $jspath = $module_path.'/js/form_premis.js';
+    drupal_add_js($jspath,array('scope' => 'footer', 'weight' => 5));
     $getDataPremis = null;
     if (!empty($idPremis)){
         $getDataPremis = get_data_premis_by_id(null, $idPremis);
@@ -431,6 +466,7 @@ function form_add_premis($idPremis = null){
         $getDataPremis = new stdClass();
         $getDataPremis->zone = '';
         $getDataPremis->nama = '';
+        $getDataPremis->idnegeri = 0;
         $getDataPremis->currency = variable_get('google_currency_converter_to', '');
         $getDataPremis->alamat = '';
         $getDataPremis->telepon = '';
@@ -445,12 +481,12 @@ function form_add_premis($idPremis = null){
     return $formPremis;
 }
 
-function get_data_premis_by_id($zone = null, $idpremis = null){
+function get_data_premis_by_id($zone = null, $idpremis = null, $idnegeri = null){
     $dataReturn = null;
     if (!empty($idpremis)){
         $fieldArray = array(
             'id', 'zone', 'nama', 'alamat', 'telepon', 'whatsapp', 'bbm',
-            'telegram', 'email', 'created', 'changed', 'uid', 'uid_changed', 'currency'
+            'telegram', 'email', 'created', 'changed', 'uid', 'uid_changed', 'currency', 'idnegeri'
         );
         $dataPremis = getTableDataByField('zdatapremis','access data premis',$fieldArray,null,'id',$idpremis);
         if (count($dataPremis)){
@@ -459,22 +495,55 @@ function get_data_premis_by_id($zone = null, $idpremis = null){
     }else{
         $fieldArray = array(
             'id', 'zone', 'nama', 'alamat', 'telepon', 'whatsapp', 'bbm',
-            'telegram', 'email', 'created', 'changed', 'uid', 'uid_changed', 'currency'
+            'telegram', 'email', 'created', 'changed', 'uid', 'uid_changed', 'currency', 'idnegeri'
         );
-        if (empty($zone)){
+        if (empty($zone) && empty($idnegeri)){
             $dataPremis = getTableDataByField('zdatapremis','access data premis',$fieldArray,'nama');
         }else{
-            $consData = new stdClass();
-            $consData->fieldName = 'ta.zone';
-            $consData->value = $zone;
-            if (is_array($zone)){
-                $consData->operator = 'IN';
+            if (!empty($zone) && empty($idnegeri)) {
+                $consData = new stdClass();
+                $consData->fieldName = 'ta.zone';
+                $consData->value = $zone;
+                if (is_array($zone)) {
+                    $consData->operator = 'IN';
+                }
+                $conditionArray[] = $consData;
+                $dataPremis = getTableDataByField(
+                    'zdatapremis', 'access data premis', $fieldArray,
+                    'nama', null, null, null, $conditionArray
+                );
+            }else if (!empty($zone) && !empty($idnegeri)){
+                $consData = new stdClass();
+                $consData->fieldName = 'ta.zone';
+                $consData->value = $zone;
+                if (is_array($zone)) {
+                    $consData->operator = 'IN';
+                }
+                $conditionArray[] = $consData;
+                $consData = new stdClass();
+                $consData->fieldName = 'ta.idnegeri';
+                $consData->value = $idnegeri;
+                if (is_array($idnegeri)) {
+                    $consData->operator = 'IN';
+                }
+                $conditionArray[] = $consData;
+                $dataPremis = getTableDataByField(
+                    'zdatapremis', 'access data premis', $fieldArray,
+                    'nama', null, null, null, $conditionArray
+                );
+            }else if (empty($zone) && !empty($idnegeri)){
+                $consData = new stdClass();
+                $consData->fieldName = 'ta.idnegeri';
+                $consData->value = $idnegeri;
+                if (is_array($idnegeri)) {
+                    $consData->operator = 'IN';
+                }
+                $conditionArray[] = $consData;
+                $dataPremis = getTableDataByField(
+                    'zdatapremis', 'access data premis', $fieldArray,
+                    'nama', null, null, null, $conditionArray
+                );
             }
-            $conditionArray[] = $consData;
-            $dataPremis = getTableDataByField(
-                'zdatapremis','access data premis',$fieldArray,
-                'nama',null,null,null,$conditionArray
-            );
         }
         if (count($dataPremis)){
             $dataReturn = $dataPremis;
@@ -505,6 +574,17 @@ function form_data_premis($form, &$form_state, $variables = null){
             $arrayZone[$getDataZone[$i]->zone] = $getDataZone[$i]->nama;
         }
     }
+    if (count($arrayZone)){
+        $arrayNegeri = array();
+        foreach ($arrayZone as $idZone => $namaZone){
+            $dataNegeri = get_data_negeri_by_id($idZone);
+            if (count($dataNegeri)){
+                for ($i = 0;$i < count($dataNegeri);$i++){
+                    $arrayNegeri[$dataNegeri[$i]->id] = $dataNegeri[$i]->nama;
+                }
+            }
+        }
+    }
     if (!empty($variables->id)){
         $form['basic']['id'] = array(
             '#type' => 'hidden',
@@ -519,6 +599,16 @@ function form_data_premis($form, &$form_state, $variables = null){
         '#default_value' => $variables->zone,
         '#select2' => array(
             'placeholder' => 'Select Zone',
+        ),
+    );
+    $form['basic']['idnegeri'] = array(
+        '#title' => t('Negeri'),
+        '#type' => 'select',
+        '#required' => TRUE,
+        '#options' => $arrayNegeri,
+        '#default_value' => $variables->idnegeri,
+        '#select2' => array(
+            'placeholder' => 'Select Negeri',
         ),
     );
     $form['basic']['nama'] = array(
@@ -588,6 +678,7 @@ function form_data_premis_submit($form, &$form_state) {
     $values = $form_state['values'];
     $savedData = array();
     $savedData['zone'] = $values['zone'];
+    $savedData['idnegeri'] = $values['idnegeri'];
     $savedData['nama'] = $values['nama'];
     $savedData['alamat'] = $values['alamat'];
     $savedData['telepon'] = $values['telepon'];
@@ -906,5 +997,18 @@ function get_data_premis_by_zone_ajax(){
         $arrPremis[$dataPremis[$i]->id] = $dataPremis[$i]->nama;
     }
     print json_encode($arrPremis);
+    exit();
+}
+function update_premis_data(){
+    if (isset($_REQUEST['id']) && isset($_REQUEST['value'])){
+        $splitID = explode('-',$_REQUEST['id']);
+        $savedData['idnegeri'] = $_REQUEST['value'];
+        $values['id'] = $splitID[2];
+        saveTableData('zdatapremis','admin data premis',$savedData,'id',$values['id']);
+        $dataNegeri = get_data_negeri_by_id(null, $_REQUEST['value']);
+        print $dataNegeri->nama;
+    }else{
+        print '-';
+    }
     exit();
 }

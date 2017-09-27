@@ -35,3 +35,15 @@ function data_premis_update_7001(){
     $return = db_add_field( 'zdatapremis', 'currency', $currency);
     return $return;
 }
+
+function data_premis_update_7002(){
+    $idnegeri = array(
+        'type' => 'varchar',
+        'length' => 30,
+        'not null' => TRUE,
+        'default' => 'Not Set',
+        'description' => 'ID Negeri fro unit/premis',
+    );
+    $return = db_add_field( 'zdatapremis', 'idnegeri', $idnegeri);
+    return $return;
+}

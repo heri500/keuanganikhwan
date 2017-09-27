@@ -2888,3 +2888,60 @@ function set_user_number_format(&$desIn, &$desOut, &$separator){
         , 'setting'
     );
 }
+function cashflow_dashboard($month = null, $year = null, $zone = null){
+    if (empty($month) && empty($year)){
+        if (date('j') <= 25){
+            $month = date('n', mktime(0,0,0,date('n') - 1,1,date('Y')));
+            $year = date('Y', mktime(0,0,0,date('n') - 1,1,date('Y')));
+        }else{
+            $month = date('n');
+            $year = date('Y');
+        }
+    }
+    drupal_add_js(
+        array(
+            'month' => $month,
+            'year' => $year,
+        )
+        , 'setting'
+    );
+    $module_path = drupal_get_path('module','ikhwan_core');
+    $csspath = $module_path.'/css/custom-style.css';
+    drupal_add_css($csspath);
+    $jspath = $module_path.'/js/dashboard_menu.js';
+    drupal_add_js($jspath,array('scope' => 'footer', 'weight' => 5));
+    $jspath = $module_path.'/js/dashboard_cashflow.js';
+    drupal_add_js($jspath,array('scope' => 'footer', 'weight' => 5));
+    $monthBeforeButtonVar = array(
+        'element' => array(
+            '#attributes' => array(
+                'class' => array('btn-warning btn-sm'),
+                'id' => 'month-before',
+                'name' => 'month-before',
+            ),
+            '#button_type' => 'button',
+            '#value' => date('F', mktime(0,0,0,date('n') -1,1,date('Y'))),
+        )
+    );
+    $monthBeforeButton = theme('button', $monthBeforeButtonVar);
+    $monthBefore = date('Y', mktime(0,0,0,date('n') - 1, 1, date('Y'))).'_'.date('n', mktime(0,0,0,date('n') - 1, 1, date('Y')));
+    $monthBeforeButton .= '<input type="hidden" id="month_before" name="month_before" value="'.$monthBefore.'">';
+    $currMonthButtonVar = array(
+        'element' => array(
+            '#attributes' => array(
+                'class' => array('btn-primary btn-sm'),
+                'id' => 'curr-month',
+                'name' => 'curr-month',
+            ),
+            '#button_type' => 'button',
+            '#value' => date('F'),
+        )
+    );
+    $currMonthButton = theme('button', $currMonthButtonVar);
+    $currMonthButton .= '<input type="hidden" id="curr_month" name="curr_month" value="'.date('Y').'_'.date('n').'">';
+    $dashBoard = '<div class="col-md-12 main-chart">';
+    $dashBoard .= cash_flow_zon_chart($month, $year, $zone);
+    $dashBoard .= '</div>';
+    $chartMenu = implode('&nbsp;',menu_dashboard_report());
+    return '<div>'.$chartMenu.'</div>'.$monthBeforeButton.$currMonthButton.$dashBoard;
+}

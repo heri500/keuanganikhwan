@@ -1,0 +1,26 @@
+<?php
+/**
+ * @file
+ * Install file for data negeri module.
+ */
+/**
+ * Implements hook_install().
+ * - Add the body field.
+ */
+
+function data_negeri_install() {
+    drupal_set_message("Data Negeri Module successfully installed");
+}
+function data_negeri_uninstall() {
+    drupal_set_message("Data Negeri successfully removed");
+}
+function data_negeri_enable() {
+    drupal_set_message("Data Negeri Module successfully enabled");
+}
+function data_negeri_disable() {
+    drupal_set_message("Data Negeri Module successfully disabled");
+}
+function data_negeri_schema() {
+    require 'data_negeri.schema.inc';
+    return $schema;
+}

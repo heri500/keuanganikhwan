@@ -19,12 +19,12 @@ function assignment_all_3d_column_chart($month = null, $year = null, $zone = nul
     $arrValue = array(':month' => $month, ':year' => $year);
     $arrAssignment = db_query($strSQL, $arrValue)->fetchAll();
     $assignmentData = array();
-    $seriesData = array();
     $intDate = mktime(7, 0, 0, $month, 1, $year);
     $assignmentData['title'] = 'Assignment Zon ' . date('M Y', $intDate);
     $assignmentName = array();
     $seriesData = array();
     $zoneData = array();
+    $totalAssignmentVal = 0;
     for ($i = 0; $i < count($arrAssignment); $i++) {
         if ($i == 0){
             $zoneData[] = $arrAssignment[$i]->zone;
@@ -36,8 +36,10 @@ function assignment_all_3d_column_chart($month = null, $year = null, $zone = nul
             }
         }
         $seriesData[$arrAssignment[$i]->assignment_id][] = (float)$arrAssignment[$i]->total_bank_in;
+        $totalAssignmentVal = $totalAssignmentVal + $arrAssignment[$i]->total_bank_in;
         $assignmentName[$arrAssignment[$i]->assignment_id] = $arrAssignment[$i]->assignment_name;
     }
+    $assignmentData['subtitle'] = 'Total Assignment : RM ' . number_format($totalAssignmentVal,0,'.',',');
     if (count($seriesData)){
         foreach ($seriesData as $assKey => $assData){
             $assignmentData['series'][] = (object)array(
@@ -53,7 +55,7 @@ function assignment_all_3d_column_chart($month = null, $year = null, $zone = nul
         if ($detect->isMobile()){
             $attributes = array('style' => array('height: 450px;'));
         }else {
-            $attributes = array('style' => array('height: 700px;'));
+            $attributes = array('style' => array('height: 600px;'));
         }
         // Return block definition.
         $assignmentTotal = highcharts_render($options, $attributes);
@@ -81,10 +83,13 @@ function assignment_total_3d_column_chart($assignmentId = null, $month = null, $
         $seriesData = array();
         $intDate = mktime(7,0,0,$month,1,$year);
         $assignmentData['title'] = $jenisAssignment->assignment_name.' '.date('M Y', $intDate);
+        $totalAssignment = 0;
         for ($i = 0;$i < count($arrAssignment);$i++){
             $assignmentData['categories'][] = $namaZone[$arrAssignment[$i]->zone];
             $seriesData[] = (float)$arrAssignment[$i]->total_bank_in;
+            $totalAssignment = $totalAssignment + $arrAssignment[$i]->total_bank_in;
         }
+        $assignmentData['subtitle'] = 'Total '.$jenisAssignment->assignment_name.' : RM '.number_format($totalAssignment,0,'.',',');
         $assignmentData['series'] = (object)array(
             'name' => $jenisAssignment->assignment_name,
             'data' => $seriesData,
@@ -104,7 +109,7 @@ function assignment_total_3d_column_chart($assignmentId = null, $month = null, $
 
 function assignment_harian_3d_column_chart_options($assignmentData = null, $seriesColor = null){
     $options = null;
-    if (!empty($assignmentData)) {
+    if (!empty($assignmentData) && isset($assignmentData['categories']) && !empty($assignmentData['categories'])) {
         $options = new stdClass();
         // Chart.
         $options->chart = (object)array(
@@ -123,6 +128,10 @@ function assignment_harian_3d_column_chart_options($assignmentData = null, $seri
         // Title.
         $options->title = new stdClass();
         $options->title->text = strtoupper($assignmentData['title']);
+
+        // Sub Title
+        $options->subtitle = new stdClass();
+        $options->subtitle->text = strtoupper($assignmentData['subtitle']);
 
         // Plot options.
         $options->plotOptions = new stdClass();
@@ -180,7 +189,7 @@ function assignment_harian_3d_column_chart_options($assignmentData = null, $seri
 }
 function assignment_all_3d_column_stacked_chart_options($assignmentData = null){
     $options = null;
-    if (!empty($assignmentData)) {
+    if (!empty($assignmentData) && isset($assignmentData['categories']) && !empty($assignmentData['categories'])) {
         $options = new stdClass();
         // Chart.
         $options->chart = (object)array(
@@ -200,6 +209,10 @@ function assignment_all_3d_column_stacked_chart_options($assignmentData = null){
         // Title.
         $options->title = new stdClass();
         $options->title->text = strtoupper($assignmentData['title']);
+
+        // Sub Title
+        $options->subtitle = new stdClass();
+        $options->subtitle->text = strtoupper($assignmentData['subtitle']);
 
         // Plot options.
         $options->plotOptions = new stdClass();
@@ -228,7 +241,7 @@ function assignment_all_3d_column_stacked_chart_options($assignmentData = null){
             'align' => 'right',
             'x' => -30,
             'verticalAlign' => 'top',
-            'y' => 25,
+            'y' => 75,
             'floating' => true,
             'backgroundColor' => 'transparent',
             'borderColor' => '#CCC',
@@ -366,6 +379,143 @@ function overhead_total_3d_column_chart_options($assignmentData = null, $seriesC
             ),
         );*/
         $options->series[] = $series;
+        // Disable credits.
+        $options->credits = new stdClass();
+        $options->credits->enabled = FALSE;
+    }
+    return $options;
+}
+
+function cash_flow_zon_chart($month = null, $year = null, $zone = null){
+    $detect = mobile_detect_get_object();
+    $assignmentTotal = '';
+    $getDataZone = getZoneByCode();
+    $namaZone = array();
+    if (count($getDataZone)) {
+        for ($i = 0; $i < count($getDataZone); $i++) {
+            $namaZone[$getDataZone[$i]->zone] = $getDataZone[$i]->nama;
+        }
+    }
+    $strSQL = 'SELECT zone, SUM(jumlah_pemasukan) AS total_pemasukan, SUM(jumlah_pengeluaran) AS total_pengeluaran ';
+    $strSQL .= 'FROM {zdatazone_pemasukan_pengeluaran} ';
+    $strSQL .= 'WHERE month = :month AND year = :year GROUP BY zone ';
+    $strSQL .= 'ORDER BY total_pemasukan DESC, total_pengeluaran DESC';
+    $arrValue = array(':month' => $month, ':year' => $year);
+    $arrCashflow = db_query($strSQL, $arrValue)->fetchAll();
+    $cashflowData = array();
+    $intDate = mktime(7, 0, 0, $month, 1, $year);
+    $cashflowData['title'] = 'Cashflow Zon ' . date('M Y', $intDate);
+    $seriesData = array();
+    $zoneData = array();
+    $totalPemasukan = 0;
+    $totalPengeluaran = 0;
+    for ($i = 0; $i < count($arrCashflow); $i++) {
+        if ($i == 0){
+            $zoneData[] = $arrCashflow[$i]->zone;
+            $cashflowData['categories'][] = $namaZone[$arrCashflow[$i]->zone];
+        }else{
+            if (!in_array($arrCashflow[$i]->zone,$zoneData)){
+                $zoneData[] = $arrCashflow[$i]->zone;
+                $cashflowData['categories'][] = $namaZone[$arrCashflow[$i]->zone];
+            }
+        }
+        $seriesData['Pemasukan'][] = (float)$arrCashflow[$i]->total_pemasukan;
+        $seriesData['Pengeluaran'][] = (float)$arrCashflow[$i]->total_pengeluaran;
+        $totalPemasukan = $totalPemasukan + $arrCashflow[$i]->total_pemasukan;
+        $totalPengeluaran = $totalPengeluaran + $arrCashflow[$i]->total_pengeluaran;
+    }
+    $totalBaki = $totalPemasukan - $totalPengeluaran;
+    $cashflowData['subtitle'] = 'Total Pemasukan : RM ' . number_format($totalPemasukan,0,'.',',');
+    $cashflowData['subtitle'] .= ' Total Pengeluaran : RM '.number_format($totalPengeluaran,0,'.',',');
+    $cashflowData['subtitle'] .= ' Total Baki : RM '.number_format($totalBaki,0,'.',',');
+    if (count($seriesData)){
+        foreach ($seriesData as $assKey => $assData){
+            $cashflowData['series'][] = (object)array(
+                'name' => $assKey,
+                'data' => $assData,
+            );
+        }
+    }
+    $options = cash_flow_zon_chart_options($cashflowData);
+    if (is_object($options)) {
+        // Optionally add styles or any other valid attributes, suitable for
+        // drupal_attributes().
+        if ($detect->isMobile()){
+            $attributes = array('style' => array('height: 450px;'));
+        }else {
+            $attributes = array('style' => array('height: 600px;'));
+        }
+        // Return block definition.
+        $cashFlowChart = highcharts_render($options, $attributes);
+    }
+    return $cashFlowChart;
+}
+
+function cash_flow_zon_chart_options($cashflowData = null, $seriesColor = null){
+    $options = null;
+    if (!empty($cashflowData) && isset($cashflowData['categories']) && !empty($cashflowData['categories'])) {
+        $options = new stdClass();
+        // Chart.
+        $options->chart = (object)array(
+            'renderTo' => 'container',
+            'type' => 'column',
+            'backgroundColor' => 'transparent',
+            'marginTop' => '10',
+            'marginBottom' => '110',
+            'options3d' => (object)array(
+                'enabled' => TRUE,
+                'alpha' => 15,
+                'beta' => 15,
+                'viewDistance' => 25,
+                'depth' => 60,
+            ),
+        );
+        // Title.
+        $options->title = new stdClass();
+        $options->title->text = strtoupper($cashflowData['title']);
+
+        // Sub Title
+        $options->subtitle = new stdClass();
+        $options->subtitle->text = strtoupper($cashflowData['subtitle']);
+
+        //X-axis.
+        $options->xAxis = new stdClass();
+        $options->xAxis = (object)array(
+            'categories' => $cashflowData['categories'],
+        );
+
+        //Y-axis
+        $options->yAxis = new stdClass();
+        $options->yAxis = (object)array(
+            'title' => (object)array(
+                'text' => 'Total',
+            ),
+        );
+
+        // Legend.
+        $options->legend = new stdClass();
+        $options->legend = (object)array(
+            'align' => 'right',
+            'x' => -30,
+            'verticalAlign' => 'top',
+            'y' => 75,
+            'floating' => true,
+            'backgroundColor' => 'transparent',
+            'borderColor' => '#CCC',
+            'borderWidth' => 1,
+            'shadow' => false,
+        );
+
+        // Tooltip
+        $options->tooltip = new stdClass();
+        $options->tooltip = (object)array(
+            'headerFormat' => '<b>{point.x}</b><br/>',
+            'pointFormat' => '{series.name}: {point.y}<br/>Total Baki: {point.stackTotal}',
+        );
+
+        // Series.
+        $options->series = array();
+        $options->series = $cashflowData['series'];
         // Disable credits.
         $options->credits = new stdClass();
         $options->credits->enabled = FALSE;

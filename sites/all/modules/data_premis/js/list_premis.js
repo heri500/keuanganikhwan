@@ -21,4 +21,43 @@ jQuery(function ($) {
         e.preventDefault();
         window.location = Drupal.settings.basePath + 'masterdata/premis/add';
     });
+    alamatupdate = Drupal.settings.basePath + 'masterdata/premis/updatepremis';
+    alamatnegeri = Drupal.settings.basePath + 'masterdata/negeri/getajax';
+    $('.edit-negeri').editable(alamatupdate, {
+        'submitdata': function ( value, settings ) {
+            return { 'row_id': this.parentNode.getAttribute('id'), 'kol_id': 11 };
+        },
+        'loadurl' : alamatnegeri,
+        'loaddata' : function(value, settings) {
+            var cellId = this.getAttribute('id').split('-');
+            return {zone: cellId[1]};
+        },
+        'width': '140px',
+        'height': '20px',
+        'submit': 'Ok',
+        'type': 'select',
+        'indicator': 'Menyimpan...',
+        'tooltip': 'Klik untuk mengubah...'
+    });
+    $('#datatable-1').dataTable().fnSettings().aoDrawCallback.push( {
+        "fn": function () {
+            $('.edit-negeri').editable('destroy');
+            $('.edit-negeri').editable(alamatupdate, {
+                'submitdata': function ( value, settings ) {
+                    return { 'cell_id': this.getAttribute('id') };
+                },
+                'loadurl' : alamatnegeri,
+                'loaddata' : function(value, settings) {
+                    var cellId = this.getAttribute('id').split('-');
+                    return {zone: cellId[1]};
+                },
+                'width': '140px',
+                'height': '20px',
+                'submit': 'Ok',
+                'type': 'select',
+                'indicator': 'Menyimpan...',
+                'tooltip': 'Klik untuk mengubah...'
+            });
+        },
+    } );
 })

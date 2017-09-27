@@ -44,6 +44,14 @@ function data_premis_menu() {
         'type' => MENU_CALLBACK,
         'weight' => 0,
     );
+    $items['masterdata/premis/updatepremis'] = array(
+        'title' => t('Update data premis'),
+        'description' => 'Update data premis.',
+        'page callback' => 'update_premis_data',
+        'access arguments' => array('admin data premis'),
+        'type' => MENU_CALLBACK,
+        'weight' => 0,
+    );
     $items['masterdata/premis/getajax'] = array(
         'title' => t('Get data premis ajax'),
         'description' => 'Get data premis ajax',

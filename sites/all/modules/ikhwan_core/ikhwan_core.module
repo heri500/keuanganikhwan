@@ -121,6 +121,14 @@ function ikhwan_core_menu() {
         'type' => MENU_CALLBACK,
         'weight' => 0,
     );
+    $items['cashflowdashboard'] = array(
+        'title' => t('Cashflow Dashboard'),
+        'description' => 'GISBH Cashflow Dashboard.',
+        'page callback' => 'cashflow_dashboard',
+        'access arguments' => array('access ikhwan data assignment'),
+        'type' => MENU_CALLBACK,
+        'weight' => 0,
+    );
     return $items;
 }
 
@@ -173,6 +181,7 @@ function ikhwan_core_permission() {
 }
 require_once 'ikhwan_core.api.php.inc';
 require_once 'ikhwan_core.chart.inc';
+require_once 'attach_plugin.api.inc';
 /**
  * @return string
  */
