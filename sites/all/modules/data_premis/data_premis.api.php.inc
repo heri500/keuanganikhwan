@@ -735,24 +735,65 @@ function form_data_premis_submit($form, &$form_state) {
 }
 function get_data_staff_premis($idPremis = null, $idStaff = null){
     $dataStaff = null;
+    $leftJoinArray = array(
+        array(
+            'tablename' => 'zdatapremis',
+            'tablealias' => 'premis',
+            'field_source' => 'id',
+            'field_join' => 'id_premis',
+            'fieldArray' => array(
+                'nama',
+            ),
+        ),
+        array(
+            'tablename' => 'zdatanegeri',
+            'tablealias' => 'negri',
+            'sourcealias' => 'premis',
+            'field_source' => 'id',
+            'field_join' => 'idnegeri',
+            'fieldArray' => array(
+                'nama',
+            ),
+        ),
+        array(
+            'tablename' => 'zdatazone',
+            'tablealias' => 'tzone',
+            'sourcealias' => 'premis',
+            'field_source' => 'zone',
+            'field_join' => 'zone',
+            'fieldArray' => array(
+                'nama',
+            ),
+        ),
+        array(
+            'tablename' => 'zdatastaff_detail',
+            'tablealias' => 'detail',
+            'field_source' => 'id_staff',
+            'field_join' => 'id',
+            'fieldArray' => array(
+                'nama_lengkap','nama_hijrah','jenis_kelamin','no_ktp','no_kk',
+                'tanggal_lahir','id_suami','id_ayah','nama_suami','nama_ayah','tempat_lahir'
+            ),
+        ),
+    );
     if (!empty($idPremis) && empty($idStaff)){
         $fieldArray = array(
             'id', 'id_premis', 'id_jawatan', 'nama', 'alamat', 'telepon', 'whatsapp', 'bbm',
             'telegram', 'email', 'created', 'changed', 'uid', 'uid_changed'
         );
-        $dataStaff = getTableDataByField('zdatastaff','access data premis',$fieldArray,'id_jawatan','id_premis',$idPremis);
+        $dataStaff = getTableDataByField('zdatastaff','access data premis',$fieldArray,'id_jawatan','id_premis',$idPremis,$leftJoinArray);
     }else if (!empty($idStaff)){
         $fieldArray = array(
             'id', 'id_premis', 'id_jawatan', 'nama', 'alamat', 'telepon', 'whatsapp', 'bbm',
             'telegram', 'email', 'created', 'changed', 'uid', 'uid_changed'
         );
-        $dataStaff = getTableDataByField('zdatastaff','access data premis',$fieldArray,'id_jawatan','id',$idStaff);
+        $dataStaff = getTableDataByField('zdatastaff','access data premis',$fieldArray,'id_jawatan','id',$idStaff,$leftJoinArray);
     }else if (empty($idPremis) && empty($idStaff)){
         $fieldArray = array(
             'id', 'id_premis', 'id_jawatan', 'nama', 'alamat', 'telepon', 'whatsapp', 'bbm',
             'telegram', 'email', 'created', 'changed', 'uid', 'uid_changed'
         );
-        $dataStaff = getTableDataByField('zdatastaff','access data premis',$fieldArray,'id_jawatan');
+        $dataStaff = getTableDataByField('zdatastaff','access data premis',$fieldArray,'id_jawatan',null,null,$leftJoinArray);
     }
     return $dataStaff;
 }

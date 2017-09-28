@@ -19,16 +19,14 @@ $schema['zdatanegeri'] = array(
         ),
         'nama' => array(
             'type' => 'varchar',
-            'length' => 500,
+            'length' => 255,
             'not null' => TRUE,
             'default' => 'Nama Negeri',
             'description' => 'Nama negeri dari data negeri',
         ),
         'alamat' => array(
-            'type' => 'varchar',
-            'length' => 1000,
-            'not null' => TRUE,
-            'default' => 'Alamat Pejabat',
+            'type' => 'text',
+            'size' => 'big',
             'description' => 'Alamat pejabat pentadbiran dari data negeri',
         ),
         'telepon' => array(
@@ -77,7 +75,6 @@ $schema['zdatanegeri'] = array(
     'indexes' => array(
         'zone'          => array('zone'),
         'nama'          => array('nama'),
-        'alamat'        => array('alamat'),
         'telepon'       => array('telepon'),
         'uid_changed'   => array('uid_changed'),
         'created'       => array('created'),
